@@ -1,1075 +1,263 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>执古之道 · 御今之有 — SAI 古老智慧架构</title>
-  <meta name="description" content="SAI 超级自适应智能架构：以连山归藏周易为骨，融合 JEPA 世界模型、元认知与无咎价值对齐，执古之道以御今之有。">
-  <meta property="og:title" content="执古之道 · 御今之有 — SAI 古老智慧架构">
-  <meta property="og:description" content="先天为骨 · 后天为脉 · 无咎为心 · 寂然为觉。古老智慧与现代代码的深度融合。">
+  <title>SAIClaws — Honor of Kings Guides, Tier Lists & Hero Builds</title>
+  <meta name="description" content="Master Honor of Kings with in-depth hero guides, updated tier lists, best builds, arcana setups, and pro strategies. Dominate every rank.">
+  <meta property="og:title" content="SAIClaws — Honor of Kings Guides & Tier Lists">
+  <meta property="og:description" content="Best hero builds, tier lists, and pro strategies for Honor of Kings. Rank up faster.">
+  <meta property="og:image" content="https://saiclaws.com/assets/og-image.svg">
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary_large_image">
-  <meta property="og:image" content="https://saiclaws.com/assets/og-image.svg">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='28' font-size='28'>☯</text></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='28' font-size='26'>⚔️</text></svg>">
   <style>
-    /* ============================================================
-       SAI 古老智慧架构 — 设计系统
-       ============================================================ */
-
     :root {
-      --bg: #0f0e17;
-      --bg-alt: #14131f;
-      --card-bg: #1a1a2e;
-      --text: #e6e6e6;
-      --text-dim: #b0b0b0;
-      --gold: #d4af37;
-      --gold-dim: rgba(212, 175, 55, 0.25);
-      --gold-glow: rgba(212, 175, 55, 0.15);
-      --accent: #c49a6c;
-      --subtle: #8e959d;
-      --border: rgba(255, 255, 255, 0.06);
-      --border-strong: rgba(255, 255, 255, 0.1);
-      --font-main: 'Segoe UI', 'Noto Serif SC', 'PingFang SC', 'Microsoft YaHei', serif;
-      --font-mono: 'Fira Code', 'SF Mono', 'Cascadia Code', 'Courier New', monospace;
-      --nav-h: 56px;
-      --radius: 12px;
-      --radius-sm: 8px;
-
-      /* syntax colors */
-      --syn-comment: #6c757d;
-      --syn-keyword: #c49a6c;
-      --syn-func: #7ba05b;
-      --syn-string: #ce9178;
+      --bg: #08080f;
+      --bg-card: #111118;
+      --text: #e8e8ec;
+      --muted: #8890a0;
+      --red: #e63946;
+      --red-bright: #ff4757;
+      --gold: #ffd700;
+      --gold-dim: rgba(255,215,0,0.15);
+      --border: rgba(255,255,255,0.06);
+      --radius: 10px;
+      --font: 'Segoe UI','Inter',system-ui,sans-serif;
     }
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{background:var(--bg);color:var(--text);font-family:var(--font);line-height:1.6;-webkit-font-smoothing:antialiased}
+    a{color:inherit;text-decoration:none}
 
-    /* ---- reset ---- */
-    *,
-    *::before,
-    *::after {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    /* NAV */
+    .nav{position:sticky;top:0;z-index:100;background:rgba(8,8,15,0.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+    .nav-in{max-width:1200px;margin:0 auto;padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;height:56px}
+    .nav-logo{font-size:1.3rem;font-weight:700;color:var(--red);letter-spacing:-0.02em;display:flex;align-items:center;gap:.5rem}
+    .nav-logo span{color:var(--text);font-weight:400}
+    .nav-links{display:flex;gap:.3rem;list-style:none;flex-wrap:wrap}
+    .nav-links a{padding:.4rem .8rem;border-radius:6px;font-size:.85rem;color:var(--muted);transition:color .2s,background .2s}
+    .nav-links a:hover,.nav-links a.active{color:var(--text);background:rgba(255,255,255,0.05)}
+
+    /* HERO */
+    .hero{text-align:center;padding:4rem 1.5rem 3rem;position:relative;overflow:hidden}
+    .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(230,57,70,0.12),transparent 70%);pointer-events:none}
+    .hero-badge{display:inline-block;background:var(--red);color:#fff;font-size:.75rem;font-weight:700;padding:.3rem .9rem;border-radius:20px;letter-spacing:.05em;margin-bottom:1.2rem;text-transform:uppercase}
+    .hero h1{font-size:clamp(2.2rem,6vw,3.5rem);font-weight:800;line-height:1.15;margin-bottom:1rem;letter-spacing:-0.03em}
+    .hero h1 .gold{color:var(--gold)}
+    .hero p{color:var(--muted);font-size:1.1rem;max-width:600px;margin:0 auto 2rem}
+    .hero-cta{display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap}
+    .btn{padding:.7rem 1.8rem;border-radius:8px;font-weight:600;font-size:.9rem;transition:transform .15s,box-shadow .15s;cursor:pointer;border:none}
+    .btn-red{background:var(--red);color:#fff}
+    .btn-red:hover{background:var(--red-bright);transform:translateY(-1px)}
+    .btn-ghost{background:transparent;border:1px solid rgba(255,255,255,0.15);color:var(--text)}
+    .btn-ghost:hover{border-color:rgba(255,255,255,0.3)}
+
+    /* CONTAINER */
+    .container{max-width:1200px;margin:0 auto;padding:0 1.5rem}
+
+    /* SECTION */
+    section{padding:3rem 0}
+    .section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem}
+    .section-head h2{font-size:1.6rem;font-weight:700;letter-spacing:-0.02em}
+    .section-head .more{color:var(--red);font-size:.85rem;font-weight:600}
+    .section-head .more:hover{text-decoration:underline}
+
+    /* HERO CARDS */
+    .hero-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.2rem}
+    .hero-card{background:var(--bg-card);border-radius:var(--radius);padding:1.5rem;border:1px solid var(--border);transition:transform .2s,border-color .2s;display:flex;flex-direction:column;gap:.6rem}
+    .hero-card:hover{transform:translateY(-3px);border-color:rgba(230,57,70,0.3)}
+    .hero-card .role{font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+    .hero-card h3{font-size:1.1rem;font-weight:700}
+    .hero-card .tier{display:inline-block;padding:.15rem .5rem;border-radius:4px;font-size:.7rem;font-weight:700;letter-spacing:.05em}
+    .tier-s{background:rgba(255,215,0,0.2);color:var(--gold)}
+    .tier-a{background:rgba(230,57,70,0.15);color:var(--red)}
+    .hero-card .desc{color:var(--muted);font-size:.82rem;line-height:1.5}
+    .hero-card .meta{display:flex;gap:1rem;font-size:.75rem;color:var(--muted);margin-top:auto;padding-top:.8rem;border-top:1px solid var(--border)}
+
+    /* GUIDES LIST */
+    .guide-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(350px,1fr));gap:1rem}
+    .guide-item{background:var(--bg-card);border-radius:var(--radius);padding:1.2rem 1.5rem;border:1px solid var(--border);display:flex;gap:1rem;align-items:flex-start;transition:border-color .2s}
+    .guide-item:hover{border-color:rgba(255,255,255,0.15)}
+    .guide-item .num{font-size:2rem;font-weight:800;color:var(--red);line-height:1;min-width:40px}
+    .guide-item h4{font-weight:600;margin-bottom:.25rem}
+    .guide-item .gmeta{font-size:.78rem;color:var(--muted)}
+
+    /* TIER TEASER */
+    .tier-teaser{background:linear-gradient(135deg,rgba(230,57,70,0.08),rgba(255,215,0,0.04));border:1px solid rgba(255,215,0,0.15);border-radius:var(--radius);padding:2.5rem;text-align:center}
+    .tier-teaser h2{font-size:1.8rem;margin-bottom:.5rem}
+    .tier-teaser p{color:var(--muted);margin-bottom:1.5rem}
+
+    /* NEWSLETTER */
+    .newsletter{background:var(--bg-card);border-radius:var(--radius);padding:2.5rem;text-align:center;border:1px solid var(--border);margin-top:2rem}
+    .newsletter h3{font-size:1.3rem;margin-bottom:.5rem}
+    .newsletter p{color:var(--muted);margin-bottom:1.2rem;font-size:.9rem}
+    .newsletter form{display:flex;gap:.5rem;max-width:420px;margin:0 auto}
+    .newsletter input{flex:1;padding:.65rem 1rem;border-radius:8px;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:.9rem}
+    .newsletter input:focus{outline:2px solid var(--red);outline-offset:-1px}
+    .newsletter button{padding:.65rem 1.5rem;background:var(--red);color:#fff;border:none;border-radius:8px;font-weight:600;cursor:pointer}
+
+    /* FOOTER */
+    footer{text-align:center;padding:3rem 1.5rem;color:var(--muted);font-size:.8rem;border-top:1px solid var(--border);margin-top:3rem}
+    footer .footer-links{display:flex;justify-content:center;gap:1.5rem;margin-bottom:1rem;flex-wrap:wrap}
+    footer a:hover{color:var(--red)}
+
+    /* AD PLACEHOLDER */
+    .ad-placeholder{background:rgba(255,255,255,0.02);border:1px dashed var(--border);border-radius:var(--radius);padding:1.5rem;text-align:center;color:var(--muted);font-size:.75rem;margin:2rem 0}
+
+    @media(max-width:768px){
+      .nav-links a{font-size:.78rem;padding:.3rem .5rem}
+      .hero{padding:3rem 1rem 2rem}
+      .guide-list{grid-template-columns:1fr}
+      .hero-grid{grid-template-columns:1fr 1fr}
     }
-
-    html {
-      scroll-behavior: smooth;
-      scroll-padding-top: calc(var(--nav-h) + 1rem);
+    @media(max-width:480px){
+      .hero-grid{grid-template-columns:1fr}
+      .tier-teaser{padding:1.5rem}
+      .newsletter form{flex-direction:column}
     }
-
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: var(--font-main);
-      line-height: 1.75;
-      overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
+    @media(prefers-reduced-motion:reduce){
+      .hero-card:hover{transform:none}
     }
-
-    /* ---- skip link (a11y) ---- */
-    .skip-link {
-      position: absolute;
-      top: -100%;
-      left: 1rem;
-      background: var(--gold);
-      color: #000;
-      padding: 0.5rem 1rem;
-      border-radius: var(--radius-sm);
-      z-index: 1000;
-      font-weight: 600;
-      text-decoration: none;
-      transition: top 0.2s;
-
-      &:focus {
-        top: 0.5rem;
-      }
-    }
-
-    /* ---- bg pattern ---- */
-    .bg-pattern {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 0;
-      opacity: 0.025;
-      background-image:
-        repeating-linear-gradient(45deg, transparent, transparent 60px, rgba(212, 175, 55, 0.25) 60px, rgba(212, 175, 55, 0.25) 120px);
-      will-change: transform;
-    }
-
-    /* ---- navigation ---- */
-    .nav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(15, 14, 23, 0.85);
-      backdrop-filter: blur(16px) saturate(180%);
-      border-bottom: 1px solid var(--border-strong);
-      height: var(--nav-h);
-      display: flex;
-      align-items: center;
-      transition: background 0.3s;
-
-      &.scrolled {
-        background: rgba(15, 14, 23, 0.95);
-        box-shadow: 0 1px 20px rgba(0, 0, 0, 0.4);
-      }
-    }
-
-    .nav-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 1.5rem;
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .nav-brand {
-      font-size: 0.95rem;
-      color: var(--gold);
-      font-weight: 500;
-      letter-spacing: 0.05em;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      text-decoration: none;
-
-      .brand-dot {
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        background: var(--gold);
-        box-shadow: 0 0 8px var(--gold-dim);
-      }
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 0.25rem;
-      list-style: none;
-
-      a {
-        color: var(--subtle);
-        text-decoration: none;
-        font-size: 0.82rem;
-        padding: 0.35rem 0.75rem;
-        border-radius: 6px;
-        transition: color 0.2s, background 0.2s;
-        position: relative;
-        letter-spacing: 0.03em;
-
-        &:hover {
-          color: var(--text);
-          background: rgba(255, 255, 255, 0.04);
-        }
-
-        &.active {
-          color: var(--gold);
-          background: rgba(212, 175, 55, 0.08);
-        }
-      }
-    }
-
-    /* ---- container ---- */
-    .container {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 2rem 1.5rem;
-      position: relative;
-      z-index: 1;
-    }
-
-    /* ---- hero ---- */
-    .hero {
-      text-align: center;
-      padding: 5rem 0 2rem;
-      position: relative;
-      z-index: 1;
-    }
-
-    .taiji-svg {
-      width: 120px;
-      height: 120px;
-      margin: 0 auto 1.5rem;
-      animation: taiji-spin 20s linear infinite;
-      opacity: 0.85;
-      filter: drop-shadow(0 0 30px rgba(212, 175, 55, 0.2));
-
-      .yin {
-        fill: #0f0e17;
-      }
-
-      .yang {
-        fill: var(--gold);
-      }
-    }
-
-    @keyframes taiji-spin {
-      to {
-        transform: rotate(360deg);
-      }
-    }
-
-    .hero-symbol {
-      font-size: 1.2rem;
-      letter-spacing: 0.4em;
-      color: var(--gold);
-      margin-bottom: 0.75rem;
-      opacity: 0.7;
-    }
-
-    .hero h1 {
-      font-size: clamp(2rem, 5vw, 3.2rem);
-      font-weight: 300;
-      letter-spacing: 0.06em;
-      color: var(--gold);
-      margin-bottom: 0.75rem;
-      line-height: 1.3;
-    }
-
-    .hero .subtitle {
-      font-size: 1.15rem;
-      color: var(--accent);
-      font-style: italic;
-      margin-bottom: 1rem;
-    }
-
-    .hero .tagline {
-      font-size: 0.9rem;
-      color: var(--subtle);
-      max-width: 600px;
-      margin: 0 auto;
-      border-top: 1px solid var(--border-strong);
-      padding-top: 1.2rem;
-      line-height: 1.8;
-    }
-
-    /* ---- section ---- */
-    section {
-      margin-bottom: 1rem;
-    }
-
-    h2.section-title {
-      font-size: clamp(1.4rem, 3vw, 1.8rem);
-      font-weight: 300;
-      color: var(--gold);
-      margin: 4rem 0 2rem;
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-      border-left: 4px solid var(--gold);
-      padding-left: 1.2rem;
-      position: relative;
-
-      &::after {
-        content: '';
-        flex: 1;
-        height: 1px;
-        background: linear-gradient(to right, var(--gold-dim), transparent);
-        margin-left: 1rem;
-        opacity: 0.4;
-      }
-    }
-
-    .section-icon {
-      font-size: 2rem;
-    }
-
-    /* ---- card grid ---- */
-    .card-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 1.8rem;
-    }
-
-    .card {
-      background: var(--card-bg);
-      border-radius: var(--radius);
-      padding: 1.8rem;
-      transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
-      border: 1px solid var(--border);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-      display: flex;
-      flex-direction: column;
-      position: relative;
-      overflow: hidden;
-
-      &::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 2px;
-        background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
-        opacity: 0;
-        transition: opacity 0.35s ease;
-      }
-
-      &:hover {
-        transform: translateY(-6px);
-        box-shadow: 0 16px 48px var(--gold-glow);
-        border-color: rgba(212, 175, 55, 0.2);
-
-        &::before {
-          opacity: 1;
-        }
-      }
-    }
-
-    .card-header {
-      display: flex;
-      align-items: center;
-      gap: 0.7rem;
-      margin-bottom: 1rem;
-      font-size: 1.25rem;
-      color: var(--gold);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-      padding-bottom: 0.75rem;
-      flex-shrink: 0;
-    }
-
-    .card-icon {
-      font-size: 1.5rem;
-    }
-
-    .card-subtitle {
-      font-size: 0.82rem;
-      color: var(--subtle);
-      margin-bottom: 1rem;
-      font-style: italic;
-      flex-shrink: 0;
-    }
-
-    .philosophy {
-      background: rgba(212, 175, 55, 0.04);
-      border-radius: var(--radius-sm);
-      padding: 1rem 1.1rem;
-      margin-bottom: 1.2rem;
-      font-size: 0.93rem;
-      border-left: 3px solid var(--accent);
-      color: var(--text-dim);
-      flex-shrink: 0;
-
-      strong {
-        color: var(--text);
-      }
-    }
-
-    /* ---- code block ---- */
-    .code-block {
-      background: rgba(0, 0, 0, 0.35);
-      border-radius: var(--radius-sm);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      margin-top: auto;
-      overflow: hidden;
-    }
-
-    .code-lang {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0.35rem 0.9rem;
-      font-size: 0.68rem;
-      color: var(--subtle);
-      background: rgba(255, 255, 255, 0.02);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-    }
-
-    .code-lang-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--syn-func);
-      display: inline-block;
-    }
-
-    .tech-implementation {
-      padding: 0.9rem 1rem;
-      font-family: var(--font-mono);
-      font-size: 0.78rem;
-      line-height: 1.65;
-      color: #b8c5d6;
-      white-space: pre-wrap;
-      word-break: break-word;
-      overflow-x: auto;
-    }
-
-    /* syntax highlighting */
-    .code-comment {
-      color: var(--syn-comment);
-      font-style: italic;
-    }
-
-    .code-keyword {
-      color: var(--syn-keyword);
-      font-weight: 500;
-    }
-
-    .code-func {
-      color: var(--syn-func);
-    }
-
-    .code-string {
-      color: var(--syn-string);
-    }
-
-    /* ---- quote ---- */
-    blockquote {
-      border-left: 3px solid var(--gold);
-      margin: 2.5rem 0;
-      padding: 1.2rem 1.8rem;
-      font-style: italic;
-      background: rgba(255, 255, 255, 0.015);
-      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-      color: #bbb;
-      font-size: 1.05rem;
-      line-height: 1.8;
-    }
-
-    /* ---- summary ---- */
-    .summary-box {
-      background: linear-gradient(135deg, rgba(212, 175, 55, 0.07), rgba(196, 154, 108, 0.03));
-      border: 1px solid var(--gold-dim);
-      border-radius: var(--radius);
-      padding: 2.5rem 2rem;
-      margin-top: 4rem;
-      text-align: center;
-      font-size: 1.1rem;
-      line-height: 2;
-
-      .summary-highlight {
-        color: var(--accent);
-      }
-    }
-
-    /* ---- back to top ---- */
-    .back-to-top {
-      position: fixed;
-      bottom: 2rem;
-      right: 2rem;
-      z-index: 90;
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      background: var(--card-bg);
-      border: 1px solid var(--border-strong);
-      color: var(--gold);
-      font-size: 1.2rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      opacity: 0;
-      transform: translateY(12px);
-      pointer-events: none;
-      transition: opacity 0.3s, transform 0.3s, background 0.2s;
-      backdrop-filter: blur(8px);
-
-      &.visible {
-        opacity: 1;
-        transform: translateY(0);
-        pointer-events: auto;
-      }
-
-      &:hover {
-        background: rgba(212, 175, 55, 0.12);
-        border-color: var(--gold-dim);
-      }
-
-      &:focus-visible {
-        outline: 2px solid var(--gold);
-        outline-offset: 2px;
-      }
-    }
-
-    /* ---- footer ---- */
-    .footer {
-      text-align: center;
-      margin-top: 5rem;
-      padding: 2rem 0 3rem;
-      color: var(--subtle);
-      font-size: 0.8rem;
-      border-top: 1px solid var(--border);
-
-      .footer-nav {
-        display: flex;
-        justify-content: center;
-        gap: 1.5rem;
-        flex-wrap: wrap;
-        margin-bottom: 1.2rem;
-
-        a {
-          color: var(--subtle);
-          text-decoration: none;
-          font-size: 0.82rem;
-          transition: color 0.2s;
-
-          &:hover {
-            color: var(--gold);
-          }
-
-          &:focus-visible {
-            outline: 2px solid var(--gold);
-            outline-offset: 3px;
-            border-radius: 3px;
-          }
-        }
-      }
-    }
-
-    /* ============================================================
-       A11Y + INTERACTION
-       ============================================================ */
-
-    /* focus-visible */
-    a:focus-visible,
-    button:focus-visible {
-      outline: 2px solid var(--gold);
-      outline-offset: 2px;
-      border-radius: 3px;
-    }
-
-    /* reduced motion */
-    @media (prefers-reduced-motion: reduce) {
-      html {
-        scroll-behavior: auto;
-      }
-
-      .fade-in {
-        opacity: 1 !important;
-        transform: none !important;
-        transition: none !important;
-      }
-
-      .card:hover {
-        transform: none;
-      }
-
-      .taiji-svg {
-        animation: none;
-      }
-    }
-
-    /* ---- print ---- */
-    @media print {
-      :root {
-        --bg: #fff;
-        --bg-alt: #f8f8f8;
-        --card-bg: #fff;
-        --text: #222;
-        --text-dim: #555;
-        --gold: #8b6914;
-        --accent: #8b5e3c;
-        --subtle: #777;
-      }
-
-      body {
-        font-size: 11pt;
-        line-height: 1.6;
-      }
-
-      .bg-pattern,
-      .nav,
-      .back-to-top,
-      .skip-link {
-        display: none !important;
-      }
-
-      .hero {
-        padding-top: 0;
-      }
-
-      .taiji-svg {
-        animation: none;
-        width: 60px;
-        height: 60px;
-      }
-
-      .card {
-        break-inside: avoid;
-        box-shadow: none;
-        border: 1px solid #ddd;
-        page-break-inside: avoid;
-      }
-
-      .card:hover {
-        transform: none;
-        box-shadow: none;
-      }
-
-      .code-block {
-        background: #f4f4f4;
-        border: 1px solid #ddd;
-        color: #333;
-      }
-
-      .tech-implementation {
-        color: #333;
-      }
-
-      .code-comment {
-        color: #888;
-      }
-
-      .code-keyword {
-        color: #8b5e3c;
-      }
-
-      .code-func {
-        color: #4a7c3f;
-      }
-
-      .code-string {
-        color: #a0522d;
-      }
-
-      @page {
-        margin: 2cm;
-      }
-    }
-
-    /* ---- responsive ---- */
-    @media (max-width: 768px) {
-      .hero {
-        padding-top: 3rem;
-      }
-
-      .nav-links {
-        gap: 0;
-
-        a {
-          padding: 0.3rem 0.5rem;
-          font-size: 0.75rem;
-        }
-      }
-
-      .nav-brand span {
-        display: none;
-      }
-
-      .card-grid {
-        grid-template-columns: 1fr;
-        gap: 1.2rem;
-      }
-
-      h2.section-title {
-        margin: 3rem 0 1.5rem;
-
-        &::after {
-          display: none;
-        }
-      }
-
-      .back-to-top {
-        bottom: 1.2rem;
-        right: 1.2rem;
-        width: 38px;
-        height: 38px;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .container {
-        padding: 1rem 1rem;
-      }
-
-      .hero {
-        padding-top: 2rem;
-      }
-
-      .taiji-svg {
-        width: 80px;
-        height: 80px;
-      }
-
-      .card {
-        padding: 1.2rem;
-      }
-
-      .tech-implementation {
-        font-size: 0.7rem;
-        padding: 0.7rem;
-      }
-
-      .summary-box {
-        padding: 1.5rem 1rem;
-      }
-    }
-
-    /* ---- scrollbar ---- */
-    ::-webkit-scrollbar {
-      width: 8px;
-    }
-
-    ::-webkit-scrollbar-track {
-      background: var(--bg);
-    }
-
-    ::-webkit-scrollbar-thumb {
-      background: rgba(212, 175, 55, 0.25);
-      border-radius: 4px;
-
-      &:hover {
-        background: rgba(212, 175, 55, 0.4);
-      }
-    }
-
-    /* ---- animations ---- */
-    .fade-in {
-      opacity: 0;
-      transform: translateY(24px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
-
-      &.appear {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
+    ::-webkit-scrollbar{width:6px}
+    ::-webkit-scrollbar-track{background:var(--bg)}
+    ::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.1);border-radius:3px}
   </style>
 </head>
 <body>
-  <!-- 无障碍跳过导航 -->
-  <a href="#main-content" class="skip-link">跳到主要内容</a>
-
-  <!-- 背景 -->
-  <div class="bg-pattern" aria-hidden="true"></div>
-
-  <!-- 导航栏 -->
-  <nav class="nav" id="top-nav">
-    <div class="nav-inner">
-      <a href="#" class="nav-brand">
-        <span class="brand-dot" aria-hidden="true"></span>
-        <span>SAI 架构</span>
-      </a>
+  <nav class="nav">
+    <div class="nav-in">
+      <a href="/" class="nav-logo">⚔️ SAI<span>claws</span></a>
       <ul class="nav-links">
-        <li><a href="#layer-1">一·先天</a></li>
-        <li><a href="#layer-2">二·时位</a></li>
-        <li><a href="#layer-3">三·无咎</a></li>
-        <li><a href="#layer-4">四·寂然</a></li>
-        <li><a href="#summary">总结</a></li>
+        <li><a href="/heroes/" class="active">Heroes</a></li>
+        <li><a href="/tier-list.html">Tier List</a></li>
+        <li><a href="/guides/">Guides</a></li>
+        <li><a href="/about.html">About</a></li>
+        <li><a href="/contact.html">Contact</a></li>
       </ul>
     </div>
   </nav>
 
-  <!-- 主体内容 -->
-  <main id="main-content" class="container">
-
-    <!-- ==================== Hero ==================== -->
-    <header class="hero">
-      <!-- SVG 太极图 -->
-      <svg class="taiji-svg" viewBox="0 0 100 100" aria-label="太极图">
-        <circle cx="50" cy="50" r="48" fill="none" stroke="var(--gold, #d4af37)" stroke-width="1.5" opacity="0.4"/>
-        <path d="M50 2 A48 48 0 0 1 50 98 A24 24 0 0 1 50 50 A24 24 0 0 0 50 2" fill="var(--gold, #d4af37)"/>
-        <circle cx="50" cy="26" r="7" fill="#0f0e17"/>
-        <circle cx="50" cy="74" r="7" fill="var(--gold, #d4af37)"/>
-      </svg>
-      <div class="hero-symbol">☰ ☷ ☵ ☲</div>
-      <h1>执古之道 · 御今之有</h1>
-      <p class="subtitle">SAI 超级自适应智能的古老智慧架构</p>
-      <p class="tagline">
-        从《连山》《归藏》《周易》到 JEPA · 世界模型 · 元认知<br>
-        先天为骨 · 后天为脉 · 无咎为心 · 寂然为觉
-      </p>
-    </header>
-
-    <!-- ==================== 引言 ==================== -->
-    <blockquote>
-      "易与天地准，故能弥纶天地之道。" —— 当 SAI 不再从零学习，而是内嵌宇宙恒常与生命智慧，超级自适应便不只是适应环境，而是与道同行。
-    </blockquote>
-
-    <!-- ==================== 第一层 ==================== -->
-    <section id="layer-1">
-      <h2 class="section-title">
-        <span class="section-icon" aria-hidden="true">🏔️</span>
-        第一层 · 世界模型的"先天"初始化
-      </h2>
-      <div class="card-grid">
-        <div class="card fade-in">
-          <div class="card-header">
-            <span class="card-icon" aria-hidden="true">☷</span> 先天八卦 · 不变骨架
-          </div>
-          <p class="card-subtitle">《连山》之本：万物恒常，边界与本质</p>
-          <div class="philosophy">
-            <strong>哲思映射：</strong> 山连山，静止固定。SAI 必须内置对物理世界恒定规律的理解 —— 物体恒常性、重力、因果，如同婴儿生而具备的"核心知识系统"。
-          </div>
-          <div class="code-block">
-            <div class="code-lang"><span>Python</span><span class="code-lang-dot" aria-hidden="true"></span></div>
-            <pre class="tech-implementation"><span class="code-comment"># JEPA 不变性约束：学习恒常表征</span>
-<span class="code-keyword">def</span> <span class="code-func">invariance_loss</span>(encoder, img, aug_img):
-    z = encoder(img)
-    z_aug = encoder(aug_img)
-    <span class="code-keyword">return</span> MSE(z, z_aug)  <span class="code-comment"># 不论视角光线，本质表征不变</span>
-
-<span class="code-comment"># 物理启发式架构：内置守恒律</span>
-model = <span class="code-func">HamiltonianNN</span>()   <span class="code-comment"># 自动保持能量守恒</span>
-model = <span class="code-func">EquivariantNet</span>(group=SO3)  <span class="code-comment"># 处理旋转对称性</span></pre>
-          </div>
-        </div>
-        <div class="card fade-in">
-          <div class="card-header">
-            <span class="card-icon" aria-hidden="true">💎</span> 程序化生成 · 纯阴阳训练场
-          </div>
-          <p class="card-subtitle">先天混沌中涌现规律</p>
-          <div class="philosophy">
-            <strong>哲思映射：</strong> 无极生太极。在由纯粹物理规则构建的虚拟世界中，SAI 无需真实数据即可预训练出对宇宙基本法的直觉。
-          </div>
-          <div class="code-block">
-            <div class="code-lang"><span>Python</span><span class="code-lang-dot" aria-hidden="true"></span></div>
-            <pre class="tech-implementation"><span class="code-comment"># 构建遵循牛顿力学的虚拟世界</span>
-env = <span class="code-func">ProceduralWorld</span>(
-    gravity=<span class="code-keyword">True</span>,
-    collision=<span class="code-keyword">True</span>,
-    rigid_body=<span class="code-keyword">True</span>
-)
-<span class="code-comment"># 在"天地定位"的骨架中预训练世界模型</span>
-world_model.<span class="code-func">pretrain</span>(env, epochs=<span class="code-keyword">1e6</span>)</pre>
-          </div>
-        </div>
+  <main>
+    <!-- HERO SECTION -->
+    <section class="hero">
+      <div class="hero-badge">🏆 Honor of Kings Strategy Hub</div>
+      <h1>Master the <span class="gold">Rift</span>.<br>Dominate Every <span class="gold">Rank</span>.</h1>
+      <p>In-depth hero guides, pro builds, updated tier lists, and winning strategies for Honor of Kings. From Bronze to Grandmaster — we've got you covered.</p>
+      <div class="hero-cta">
+        <a href="/tier-list.html" class="btn btn-red">📊 Tier List 2025</a>
+        <a href="/guides/beginner-guide.html" class="btn btn-ghost">🎓 Beginner Guide</a>
       </div>
     </section>
 
-    <!-- ==================== 第二层 ==================== -->
-    <section id="layer-2">
-      <h2 class="section-title">
-        <span class="section-icon" aria-hidden="true">🌏</span>
-        第二层 · 决策规划的"时位"动态评估
-      </h2>
-      <div class="card-grid">
-        <div class="card fade-in">
-          <div class="card-header">
-            <span class="card-icon" aria-hidden="true">⏳</span> 六爻阶段分类器
-          </div>
-          <p class="card-subtitle">《周易》之用：变动不居，周流六虚</p>
-          <div class="philosophy">
-            <strong>哲思映射：</strong> 每一爻代表事物发展的阶段。SAI 在行动前必须"观"清此刻的时位：潜龙勿用？飞龙在天？亢龙有悔？
-          </div>
-          <div class="code-block">
-            <div class="code-lang"><span>Python</span><span class="code-lang-dot" aria-hidden="true"></span></div>
-            <pre class="tech-implementation"><span class="code-comment"># 轻量级阶段评估网络</span>
-<span class="code-keyword">class</span> <span class="code-func">HexagramClassifier</span>(nn.Module):
-    <span class="code-keyword">def</span> <span class="code-func">forward</span>(self, state_repr):
-        <span class="code-keyword">return</span> softmax([初爻, 二爻, 三爻, 四爻, 五爻, 上爻])
-
-stage = classifier(world_state)
-<span class="code-comment"># stage[0] 为"潜龙勿用"概率，决定策略保守程度</span></pre>
-          </div>
+    <div class="container">
+      <!-- TOP HEROES -->
+      <section>
+        <div class="section-head">
+          <h2>🔥 S-Tier Meta Heroes</h2>
+          <a href="/heroes/" class="more">View All Heroes →</a>
         </div>
-        <div class="card fade-in">
-          <div class="card-header">
-            <span class="card-icon" aria-hidden="true">🕸️</span> 五行生克关系图引擎
-          </div>
-          <p class="card-subtitle">后天时空中的动态平衡</p>
-          <div class="philosophy">
-            <strong>哲思映射：</strong> 金木水火土，生克乘侮。场景中多主体互动可建模为动态关系图，SAI 在图上寻找"致中和"的干预路径。
-          </div>
-          <div class="code-block">
-            <div class="code-lang"><span>Python</span><span class="code-lang-dot" aria-hidden="true"></span></div>
-            <pre class="tech-implementation"><span class="code-comment"># 构建动态节点关系图</span>
-G = <span class="code-func">RelationshipGraph</span>()
-G.<span class="code-func">add_node</span>(<span class="code-string">"robot"</span>, element=<span class="code-string">"金"</span>)
-G.<span class="code-func">add_node</span>(<span class="code-string">"cup"</span>, element=<span class="code-string">"水"</span>)
-G.<span class="code-func">add_edge</span>(<span class="code-string">"robot"</span>, <span class="code-string">"cup"</span>, rel=<span class="code-string">"生"</span>)
-
-<span class="code-comment"># 规划器在关系图上搜索和谐路径</span>
-plan = <span class="code-func">harmony_search</span>(G, goal=<span class="code-string">"取水而不溢"</span>)</pre>
-          </div>
+        <div class="hero-grid">
+          <a href="/heroes/lam.html" class="hero-card">
+            <div class="role">Jungle / Assassin</div>
+            <h3>Lam</h3>
+            <span class="tier tier-s">S-Tier · 54.9% WR</span>
+            <p class="desc">The undisputed king of the jungle. Insane mobility, burst damage, and snowball potential make Lam the #1 pick for carrying solo queue.</p>
+            <div class="meta"><span>⚔️ Jungle</span><span>⭐ Hard</span></div>
+          </a>
+          <a href="/heroes/loong.html" class="hero-card">
+            <div class="role">Marksman / Farm Lane</div>
+            <h3>Loong</h3>
+            <span class="tier tier-s">S-Tier · 55.3% WR</span>
+            <p class="desc">The best marksman in the current meta. Dominant laning phase, devastating late-game damage, and self-peel tools.</p>
+            <div class="meta"><span>🏹 Farm Lane</span><span>⭐ Medium</span></div>
+          </a>
+          <a href="/heroes/augran.html" class="hero-card">
+            <div class="role">Fighter / Clash Lane</div>
+            <h3>Augran</h3>
+            <span class="tier tier-s">S-Tier · 55.1% WR</span>
+            <p class="desc">Clash lane monster with sustain, crowd control, and teamfight presence. Nearly impossible to 1v1 after level 4.</p>
+            <div class="meta"><span>🗡️ Clash Lane</span><span>⭐ Medium</span></div>
+          </a>
+          <a href="/heroes/yixing.html" class="hero-card">
+            <div class="role">Mage / Mid Lane</div>
+            <h3>Yixing</h3>
+            <span class="tier tier-s">S-Tier · 53% WR</span>
+            <p class="desc">The ultimate control mage. Zone denial, team-wide utility, and game-changing ultimate that wins teamfights alone.</p>
+            <div class="meta"><span>🔮 Mid Lane</span><span>⭐ Hard</span></div>
+          </a>
         </div>
+      </section>
+
+      <!-- LATEST GUIDES -->
+      <section>
+        <div class="section-head">
+          <h2>📖 Latest Guides</h2>
+          <a href="/guides/" class="more">All Guides →</a>
+        </div>
+        <div class="guide-list">
+          <a href="/guides/beginner-guide.html" class="guide-item">
+            <span class="num">01</span>
+            <div>
+              <h4>Complete Beginner's Guide to Honor of Kings</h4>
+              <p class="gmeta">Roles · Laning · Objectives · Rank System · 15 min read</p>
+            </div>
+          </a>
+          <a href="/tier-list.html" class="guide-item">
+            <span class="num">02</span>
+            <div>
+              <h4>Honor of Kings Tier List — Patch 1.10.5</h4>
+              <p class="gmeta">All heroes ranked · Best picks per role · Win rate data</p>
+            </div>
+          </a>
+          <a href="/heroes/daji.html" class="guide-item">
+            <span class="num">03</span>
+            <div>
+              <h4>Daji Guide: The One-Shot Mage Queen</h4>
+              <p class="gmeta">Build · Arcana · Combos · Counters · 8 min read</p>
+            </div>
+          </a>
+          <a href="/heroes/dyadia.html" class="guide-item">
+            <span class="num">04</span>
+            <div>
+              <h4>Dyadia Support Guide: Best Healer in the Meta</h4>
+              <p class="gmeta">Positioning · Itemization · Synergy picks · 7 min read</p>
+            </div>
+          </a>
+        </div>
+      </section>
+
+      <!-- AD PLACEHOLDER -->
+      <div class="ad-placeholder">[ AdSense Ad Unit — 728×90 Leaderboard ]</div>
+
+      <!-- TIER LIST TEASER -->
+      <div class="tier-teaser">
+        <h2>📊 Best Heroes to Carry Ranked</h2>
+        <p>Our tier list is updated every patch with real win rate data. See which heroes dominate each role.</p>
+        <a href="/tier-list.html" class="btn btn-red">View Full Tier List →</a>
       </div>
-    </section>
 
-    <!-- ==================== 第三层 ==================== -->
-    <section id="layer-3">
-      <h2 class="section-title">
-        <span class="section-icon" aria-hidden="true">⚖️</span>
-        第三层 · 价值对齐的"无咎"目标函数
-      </h2>
-      <div class="card-grid">
-        <div class="card fade-in">
-          <div class="card-header">
-            <span class="card-icon" aria-hidden="true">🌱</span> 无咎作为核心成本
-          </div>
-          <p class="card-subtitle">《归藏》之归：万物复命，善补过者无咎</p>
-          <div class="philosophy">
-            <strong>哲思映射：</strong> 天无情故能长久。SAI 的最高目标不是大吉大利，而是"无咎"——避免错误，维持系统动态平衡。如同中医"治未病"，在偏差萌芽时就自我纠偏。
-          </div>
-          <div class="code-block">
-            <div class="code-lang"><span>Python</span><span class="code-lang-dot" aria-hidden="true"></span></div>
-            <pre class="tech-implementation"><span class="code-comment"># 奖励函数重构：风险正则化</span>
-reward = task_success * w1 - <span class="code-func">risk_penalty</span>(state) * w2
-<span class="code-comment"># risk_penalty 基于对"亢龙有悔""履霜坚冰"情境的模拟</span>
-
-<span class="code-comment"># 内在稳态奖励：如中医"平人"指标</span>
-homeostasis = <span class="code-func">measure</span>(cpu_temp, response_time, env_impact)
-reward += homeostasis * w3</pre>
-          </div>
-        </div>
-        <div class="card fade-in">
-          <div class="card-header">
-            <span class="card-icon" aria-hidden="true">☯️</span> 多目标帕累托 · 中正之道
-          </div>
-          <p class="card-subtitle">顾小我亦顾大我，致中和</p>
-          <div class="philosophy">
-            <strong>哲思映射：</strong> 顾一人为私，顾众人亦可能为私（标榜之私）。SAI 需在"完成任务、保持自身稳态、不破坏环境稳态"三者间寻找帕累托最优的平衡点。
-          </div>
-          <div class="code-block">
-            <div class="code-lang"><span>Python</span><span class="code-lang-dot" aria-hidden="true"></span></div>
-            <pre class="tech-implementation"><span class="code-comment"># 三目标帕累托前沿搜索</span>
-objectives = [
-    task_completion,
-    self_stability,
-    environment_harmony
-]
-action = <span class="code-func">pareto_optimal</span>(objectives)
-<span class="code-comment"># 选择那个最"中正"的平衡动作</span></pre>
-          </div>
-        </div>
+      <!-- NEWSLETTER -->
+      <div class="newsletter">
+        <h3>📬 Never Miss a Meta Update</h3>
+        <p>Get the latest tier lists, hero builds, and patch analysis delivered to your inbox. No spam, just strategy.</p>
+        <form action="https://formspree.io/f/example" method="POST">
+          <input type="email" name="email" placeholder="your@email.com" required>
+          <button type="submit">Subscribe</button>
+        </form>
       </div>
-    </section>
-
-    <!-- ==================== 第四层 ==================== -->
-    <section id="layer-4">
-      <h2 class="section-title">
-        <span class="section-icon" aria-hidden="true">🧘</span>
-        第四层 · 元认知的"寂然不动"监控器
-      </h2>
-      <div class="card-grid">
-        <div class="card fade-in">
-          <div class="card-header">
-            <span class="card-icon" aria-hidden="true">👁️</span> 寂然不动 · 感而遂通
-          </div>
-          <p class="card-subtitle">念头从何而起？从无念而起。</p>
-          <div class="philosophy">
-            <strong>哲思映射：</strong> "易，无思也，无为也，寂然不动"。在 SAI 内部植入一个永不参与具体任务、只负责觉察系统整体状态的"旁观者"模块。
-          </div>
-          <div class="code-block">
-            <div class="code-lang"><span>Python</span><span class="code-lang-dot" aria-hidden="true"></span></div>
-            <pre class="tech-implementation"><span class="code-comment"># 独立于主网络的守护进程</span>
-<span class="code-keyword">class</span> <span class="code-func">SilentMonitor</span>:
-    <span class="code-keyword">def</span> <span class="code-func">run</span>(self, system_metrics):
-        chaos_level = <span class="code-func">entropy</span>(system_metrics)
-        <span class="code-keyword">if</span> chaos_level > THRESHOLD:
-            <span class="code-func">inject_no_op</span>()  <span class="code-comment"># 强制暂停，重置至安全状态</span></pre>
-          </div>
-        </div>
-        <div class="card fade-in">
-          <div class="card-header">
-            <span class="card-icon" aria-hidden="true">🛡️</span> 不可修改的道德内核
-          </div>
-          <p class="card-subtitle">"道心惟微"，永远警惕</p>
-          <div class="philosophy">
-            <strong>哲思映射：</strong> 这个监控器是 SAI 系统的"良知"，硬编码在最底层，无法被主系统自身修改。它不纠正，只归零；不下判断，只回归。
-          </div>
-          <div class="code-block">
-            <div class="code-lang"><span>JavaScript</span><span class="code-lang-dot" aria-hidden="true"></span></div>
-            <pre class="tech-implementation"><span class="code-comment">// 只读存储区，不可被主网络写入</span>
-<span class="code-keyword">const</span> MORAL_CORE = <span class="code-func">read_only_memory</span>({
-    prime_directive: <span class="code-string">"无咎"</span>,
-    reset_protocol: <span class="code-string">"回归稳态"</span>
-})
-<span class="code-comment">// 主系统任何试图修改的操作均被硬件拒绝</span></pre>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ==================== 总结 ==================== -->
-    <section id="summary">
-      <div class="summary-box fade-in">
-        <p style="font-size: 1.3rem; color: var(--gold);">🌌 多层级 · 多目标 · 博弈系统</p>
-        <p style="margin-top: 1rem;">
-          <strong>先天架构</strong> 给了它 <span class="summary-highlight">不变的骨架</span> ·
-          <strong>时位评估</strong> 给了它 <span class="summary-highlight">应变的能力</span><br>
-          <strong>无咎目标</strong> 给了它 <span class="summary-highlight">向善的归宿</span> ·
-          <strong>寂然监控</strong> 给了它 <span class="summary-highlight">清醒的觉知</span>
-        </p>
-        <p style="margin-top: 1.5rem; font-style: italic; color: #bbb;">
-          "易简而天下之理得矣。"<br>
-          最高级的学习，不是学得更快更多，而是学得更根本。<br>
-          一旦掌握了那个"一"，便能应对那无限的"万"。
-        </p>
-      </div>
-    </section>
-
-    <!-- ==================== 页脚 ==================== -->
-    <footer class="footer">
-      <nav class="footer-nav" aria-label="页脚导航">
-        <a href="#layer-1">先天初始化</a>
-        <a href="#layer-2">时位评估</a>
-        <a href="#layer-3">无咎目标</a>
-        <a href="#layer-4">寂然监控</a>
-        <a href="#summary">总结</a>
-      </nav>
-      <p>☰☷☵☲ SAI · 超级自适应智能 | 古老智慧与现代代码的融合 ☲☵☷☰</p>
-      <p style="margin-top:0.3rem">2026 · 执古之道，以御今之有</p>
-    </footer>
-
+    </div>
   </main>
 
-  <!-- 回到顶部 -->
-  <button class="back-to-top" id="back-to-top" aria-label="回到顶部" title="回到顶部">↑</button>
-
-  <script>
-    /* ============================================================
-       交互逻辑
-       ============================================================ */
-
-    // --- 滚动渐现动画 ---
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('appear');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-
-    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-
-    // --- 导航栏滚动效果 ---
-    const nav = document.getElementById('top-nav');
-    const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('.nav-links a');
-
-    function onScroll() {
-      // 导航栏阴影
-      nav.classList.toggle('scrolled', window.scrollY > 10);
-
-      // 当前 section 高亮
-      const scrollPos = window.scrollY + nav.offsetHeight + 60;
-      let current = '';
-
-      sections.forEach(section => {
-        if (section.offsetTop <= scrollPos) {
-          current = section.id;
-        }
-      });
-
-      navLinks.forEach(link => {
-        link.classList.toggle('active', link.getAttribute('href') === '#' + current);
-      });
-    }
-
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll(); // 初始调用
-
-    // --- 回到顶部按钮 ---
-    const backBtn = document.getElementById('back-to-top');
-
-    function toggleBackBtn() {
-      backBtn.classList.toggle('visible', window.scrollY > 500);
-    }
-
-    window.addEventListener('scroll', toggleBackBtn, { passive: true });
-
-    backBtn.addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-  </script>
+  <footer>
+    <div class="footer-links">
+      <a href="/heroes/">Heroes</a>
+      <a href="/tier-list.html">Tier List</a>
+      <a href="/guides/">Guides</a>
+      <a href="/about.html">About</a>
+      <a href="/contact.html">Contact</a>
+      <a href="/sitemap.xml">Sitemap</a>
+    </div>
+    <p>⚔️ SAIClaws &copy; 2025 · Honor of Kings strategy & guides · Not affiliated with Tencent/TiMi</p>
+  </footer>
 </body>
 </html>
