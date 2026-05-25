@@ -5,14 +5,17 @@
   <url><loc>https://saiclaws.com/exam-overview.html</loc><priority>0.9</priority></url>
   <url><loc>https://saiclaws.com/cpa-requirements.html</loc><priority>0.9</priority></url>
   <url><loc>https://saiclaws.com/study-resources.html</loc><priority>0.9</priority></url>
-  <url><loc>https://saiclaws.com/exam/far.html</loc><priority>0.9</priority></url>
-  <url><loc>https://saiclaws.com/exam/aud.html</loc><priority>0.9</priority></url>
-  <url><loc>https://saiclaws.com/exam/reg.html</loc><priority>0.9</priority></url>
-  <url><loc>https://saiclaws.com/exam/disciplines.html</loc><priority>0.9</priority></url>
+  <url><loc>https://saiclaws.com/exam/accounting.html</loc><priority>0.9</priority></url>
+  <url><loc>https://saiclaws.com/exam/auditing.html</loc><priority>0.9</priority></url>
+  <url><loc>https://saiclaws.com/exam/finance.html</loc><priority>0.9</priority></url>
+  <url><loc>https://saiclaws.com/exam/tax-law.html</loc><priority>0.9</priority></url>
+  <url><loc>https://saiclaws.com/exam/economic-law.html</loc><priority>0.9</priority></url>
+  <url><loc>https://saiclaws.com/exam/strategy.html</loc><priority>0.9</priority></url>
+  <url><loc>https://saiclaws.com/exam/comprehensive.html</loc><priority>0.8</priority></url>
   <url><loc>https://saiclaws.com/blog/</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://saiclaws.com/blog/cpa-exam-order.html</loc><priority>0.8</priority></url>
-  <url><loc>https://saiclaws.com/blog/study-schedule.html</loc><priority>0.8</priority></url>
-  <url><loc>https://saiclaws.com/blog/common-mistakes.html</loc><priority>0.8</priority></url>
+  <url><loc>https://saiclaws.com/blog/subject-order.html</loc><priority>0.8</priority></url>
+  <url><loc>https://saiclaws.com/blog/study-plan.html</loc><priority>0.8</priority></url>
+  <url><loc>https://saiclaws.com/blog/avoid-pitfalls.html</loc><priority>0.8</priority></url>
   <url><loc>https://saiclaws.com/about.html</loc><priority>0.5</priority></url>
   <url><loc>https://saiclaws.com/contact.html</loc><priority>0.5</priority></url>
 </urlset>

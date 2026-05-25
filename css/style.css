@@ -21,7 +21,7 @@
   --radius: 12px;
   --radius-sm: 8px;
   --shadow: 0 4px 24px rgba(0,0,0,0.3);
-  --font: 'Segoe UI','Inter',system-ui,-apple-system,sans-serif;
+  --font: 'PingFang SC','Hiragino Sans GB','Microsoft YaHei','Noto Sans SC','Segoe UI','Inter',system-ui,-apple-system,sans-serif;
   --max-w: 1200px;
 }
 
