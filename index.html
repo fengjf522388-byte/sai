@@ -3,244 +3,176 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SAIClaws — Honor of Kings Guides, Tier Lists & Hero Builds</title>
-  <meta name="description" content="Master Honor of Kings with in-depth hero guides, updated tier lists, best builds, arcana setups, and pro strategies. Dominate every rank.">
-  <meta property="og:title" content="SAIClaws — Honor of Kings Guides & Tier Lists">
-  <meta property="og:description" content="Best hero builds, tier lists, and pro strategies for Honor of Kings. Rank up faster.">
+  <title>SAIClaws CPA — Free CPA Exam Study Guides, Tips & Resources</title>
+  <meta name="description" content="Master the CPA exam with free study guides, exam section breakdowns, study tips, formula sheets, and expert strategies. Everything you need to become a Certified Public Accountant.">
+  <meta property="og:title" content="SAIClaws CPA — Free CPA Exam Study Guides & Resources">
+  <meta property="og:description" content="Free CPA exam guides, study tips, formula sheets, and expert strategies. Pass the CPA exam with confidence.">
   <meta property="og:image" content="https://saiclaws.com/assets/og-image.svg">
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='28' font-size='26'>⚔️</text></svg>">
-  <style>
-    :root {
-      --bg: #08080f;
-      --bg-card: #111118;
-      --text: #e8e8ec;
-      --muted: #8890a0;
-      --red: #e63946;
-      --red-bright: #ff4757;
-      --gold: #ffd700;
-      --gold-dim: rgba(255,215,0,0.15);
-      --border: rgba(255,255,255,0.06);
-      --radius: 10px;
-      --font: 'Segoe UI','Inter',system-ui,sans-serif;
-    }
-    *{margin:0;padding:0;box-sizing:border-box}
-    body{background:var(--bg);color:var(--text);font-family:var(--font);line-height:1.6;-webkit-font-smoothing:antialiased}
-    a{color:inherit;text-decoration:none}
-
-    /* NAV */
-    .nav{position:sticky;top:0;z-index:100;background:rgba(8,8,15,0.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
-    .nav-in{max-width:1200px;margin:0 auto;padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;height:56px}
-    .nav-logo{font-size:1.3rem;font-weight:700;color:var(--red);letter-spacing:-0.02em;display:flex;align-items:center;gap:.5rem}
-    .nav-logo span{color:var(--text);font-weight:400}
-    .nav-links{display:flex;gap:.3rem;list-style:none;flex-wrap:wrap}
-    .nav-links a{padding:.4rem .8rem;border-radius:6px;font-size:.85rem;color:var(--muted);transition:color .2s,background .2s}
-    .nav-links a:hover,.nav-links a.active{color:var(--text);background:rgba(255,255,255,0.05)}
-
-    /* HERO */
-    .hero{text-align:center;padding:4rem 1.5rem 3rem;position:relative;overflow:hidden}
-    .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(230,57,70,0.12),transparent 70%);pointer-events:none}
-    .hero-badge{display:inline-block;background:var(--red);color:#fff;font-size:.75rem;font-weight:700;padding:.3rem .9rem;border-radius:20px;letter-spacing:.05em;margin-bottom:1.2rem;text-transform:uppercase}
-    .hero h1{font-size:clamp(2.2rem,6vw,3.5rem);font-weight:800;line-height:1.15;margin-bottom:1rem;letter-spacing:-0.03em}
-    .hero h1 .gold{color:var(--gold)}
-    .hero p{color:var(--muted);font-size:1.1rem;max-width:600px;margin:0 auto 2rem}
-    .hero-cta{display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap}
-    .btn{padding:.7rem 1.8rem;border-radius:8px;font-weight:600;font-size:.9rem;transition:transform .15s,box-shadow .15s;cursor:pointer;border:none}
-    .btn-red{background:var(--red);color:#fff}
-    .btn-red:hover{background:var(--red-bright);transform:translateY(-1px)}
-    .btn-ghost{background:transparent;border:1px solid rgba(255,255,255,0.15);color:var(--text)}
-    .btn-ghost:hover{border-color:rgba(255,255,255,0.3)}
-
-    /* CONTAINER */
-    .container{max-width:1200px;margin:0 auto;padding:0 1.5rem}
-
-    /* SECTION */
-    section{padding:3rem 0}
-    .section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem}
-    .section-head h2{font-size:1.6rem;font-weight:700;letter-spacing:-0.02em}
-    .section-head .more{color:var(--red);font-size:.85rem;font-weight:600}
-    .section-head .more:hover{text-decoration:underline}
-
-    /* HERO CARDS */
-    .hero-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.2rem}
-    .hero-card{background:var(--bg-card);border-radius:var(--radius);padding:1.5rem;border:1px solid var(--border);transition:transform .2s,border-color .2s;display:flex;flex-direction:column;gap:.6rem}
-    .hero-card:hover{transform:translateY(-3px);border-color:rgba(230,57,70,0.3)}
-    .hero-card .role{font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
-    .hero-card h3{font-size:1.1rem;font-weight:700}
-    .hero-card .tier{display:inline-block;padding:.15rem .5rem;border-radius:4px;font-size:.7rem;font-weight:700;letter-spacing:.05em}
-    .tier-s{background:rgba(255,215,0,0.2);color:var(--gold)}
-    .tier-a{background:rgba(230,57,70,0.15);color:var(--red)}
-    .hero-card .desc{color:var(--muted);font-size:.82rem;line-height:1.5}
-    .hero-card .meta{display:flex;gap:1rem;font-size:.75rem;color:var(--muted);margin-top:auto;padding-top:.8rem;border-top:1px solid var(--border)}
-
-    /* GUIDES LIST */
-    .guide-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(350px,1fr));gap:1rem}
-    .guide-item{background:var(--bg-card);border-radius:var(--radius);padding:1.2rem 1.5rem;border:1px solid var(--border);display:flex;gap:1rem;align-items:flex-start;transition:border-color .2s}
-    .guide-item:hover{border-color:rgba(255,255,255,0.15)}
-    .guide-item .num{font-size:2rem;font-weight:800;color:var(--red);line-height:1;min-width:40px}
-    .guide-item h4{font-weight:600;margin-bottom:.25rem}
-    .guide-item .gmeta{font-size:.78rem;color:var(--muted)}
-
-    /* TIER TEASER */
-    .tier-teaser{background:linear-gradient(135deg,rgba(230,57,70,0.08),rgba(255,215,0,0.04));border:1px solid rgba(255,215,0,0.15);border-radius:var(--radius);padding:2.5rem;text-align:center}
-    .tier-teaser h2{font-size:1.8rem;margin-bottom:.5rem}
-    .tier-teaser p{color:var(--muted);margin-bottom:1.5rem}
-
-    /* NEWSLETTER */
-    .newsletter{background:var(--bg-card);border-radius:var(--radius);padding:2.5rem;text-align:center;border:1px solid var(--border);margin-top:2rem}
-    .newsletter h3{font-size:1.3rem;margin-bottom:.5rem}
-    .newsletter p{color:var(--muted);margin-bottom:1.2rem;font-size:.9rem}
-    .newsletter form{display:flex;gap:.5rem;max-width:420px;margin:0 auto}
-    .newsletter input{flex:1;padding:.65rem 1rem;border-radius:8px;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:.9rem}
-    .newsletter input:focus{outline:2px solid var(--red);outline-offset:-1px}
-    .newsletter button{padding:.65rem 1.5rem;background:var(--red);color:#fff;border:none;border-radius:8px;font-weight:600;cursor:pointer}
-
-    /* FOOTER */
-    footer{text-align:center;padding:3rem 1.5rem;color:var(--muted);font-size:.8rem;border-top:1px solid var(--border);margin-top:3rem}
-    footer .footer-links{display:flex;justify-content:center;gap:1.5rem;margin-bottom:1rem;flex-wrap:wrap}
-    footer a:hover{color:var(--red)}
-
-    /* AD PLACEHOLDER */
-    .ad-placeholder{background:rgba(255,255,255,0.02);border:1px dashed var(--border);border-radius:var(--radius);padding:1.5rem;text-align:center;color:var(--muted);font-size:.75rem;margin:2rem 0}
-
-    @media(max-width:768px){
-      .nav-links a{font-size:.78rem;padding:.3rem .5rem}
-      .hero{padding:3rem 1rem 2rem}
-      .guide-list{grid-template-columns:1fr}
-      .hero-grid{grid-template-columns:1fr 1fr}
-    }
-    @media(max-width:480px){
-      .hero-grid{grid-template-columns:1fr}
-      .tier-teaser{padding:1.5rem}
-      .newsletter form{flex-direction:column}
-    }
-    @media(prefers-reduced-motion:reduce){
-      .hero-card:hover{transform:none}
-    }
-    ::-webkit-scrollbar{width:6px}
-    ::-webkit-scrollbar-track{background:var(--bg)}
-    ::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.1);border-radius:3px}
-  </style>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='28' font-size='26'>📊</text></svg>">
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
+  <!-- NAV -->
   <nav class="nav">
     <div class="nav-in">
-      <a href="/" class="nav-logo">⚔️ SAI<span>claws</span></a>
+      <a href="/" class="nav-logo">📊 SAI<span>claws CPA</span><span class="dot">●</span></a>
       <ul class="nav-links">
-        <li><a href="/heroes/" class="active">Heroes</a></li>
-        <li><a href="/tier-list.html">Tier List</a></li>
-        <li><a href="/guides/">Guides</a></li>
+        <li><a href="/what-is-cpa.html">CPA Guide</a></li>
+        <li><a href="/exam-overview.html">Exam Overview</a></li>
+        <li><a href="/study-resources.html">Study Resources</a></li>
+        <li><a href="/blog/">Blog</a></li>
         <li><a href="/about.html">About</a></li>
-        <li><a href="/contact.html">Contact</a></li>
       </ul>
     </div>
   </nav>
 
   <main>
-    <!-- HERO SECTION -->
+    <!-- HERO -->
     <section class="hero">
-      <div class="hero-badge">🏆 Honor of Kings Strategy Hub</div>
-      <h1>Master the <span class="gold">Rift</span>.<br>Dominate Every <span class="gold">Rank</span>.</h1>
-      <p>In-depth hero guides, pro builds, updated tier lists, and winning strategies for Honor of Kings. From Bronze to Grandmaster — we've got you covered.</p>
+      <div class="hero-badge">🎓 Free CPA Exam Study Hub</div>
+      <h1>Your Complete Guide to<br><span class="highlight">Becoming a CPA</span></h1>
+      <p>Free CPA exam study guides, section-by-section breakdowns, proven study strategies, formula sheets, and expert tips — everything you need to pass the CPA exam on your first try.</p>
       <div class="hero-cta">
-        <a href="/tier-list.html" class="btn btn-red">📊 Tier List 2025</a>
-        <a href="/guides/beginner-guide.html" class="btn btn-ghost">🎓 Beginner Guide</a>
+        <a href="/exam-overview.html" class="btn btn-primary">📋 Explore the CPA Exam</a>
+        <a href="/what-is-cpa.html" class="btn btn-outline">🔍 What is a CPA?</a>
       </div>
     </section>
 
     <div class="container">
-      <!-- TOP HEROES -->
+      <!-- STATS -->
+      <div class="stats-row">
+        <div class="stat-item">
+          <div class="stat-num">$1M+</div>
+          <div class="stat-label">Lifetime Earnings Boost vs Non-CPA</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">~50%</div>
+          <div class="stat-label">CPA Exam Pass Rate — Preparation is Key</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">6</div>
+          <div class="stat-label">Exam Sections — 3 Core + 3 Discipline</div>
+        </div>
+      </div>
+
+      <!-- QUICK NAV CARDS -->
       <section>
         <div class="section-head">
-          <h2>🔥 S-Tier Meta Heroes</h2>
-          <a href="/heroes/" class="more">View All Heroes →</a>
+          <h2>📚 Start Your CPA Journey</h2>
+          <p style="color:var(--muted);font-size:.9rem;">Everything you need, organized step by step</p>
         </div>
-        <div class="hero-grid">
-          <a href="/heroes/lam.html" class="hero-card">
-            <div class="role">Jungle / Assassin</div>
-            <h3>Lam</h3>
-            <span class="tier tier-s">S-Tier · 54.9% WR</span>
-            <p class="desc">The undisputed king of the jungle. Insane mobility, burst damage, and snowball potential make Lam the #1 pick for carrying solo queue.</p>
-            <div class="meta"><span>⚔️ Jungle</span><span>⭐ Hard</span></div>
+        <div class="card-grid">
+          <a href="/what-is-cpa.html" class="card">
+            <div class="card-icon">🔰</div>
+            <h3>What is a CPA?</h3>
+            <p>Learn what a Certified Public Accountant does, career paths, salary expectations, and why the CPA designation matters.</p>
+            <span class="tag tag-blue">Beginner</span>
           </a>
-          <a href="/heroes/loong.html" class="hero-card">
-            <div class="role">Marksman / Farm Lane</div>
-            <h3>Loong</h3>
-            <span class="tier tier-s">S-Tier · 55.3% WR</span>
-            <p class="desc">The best marksman in the current meta. Dominant laning phase, devastating late-game damage, and self-peel tools.</p>
-            <div class="meta"><span>🏹 Farm Lane</span><span>⭐ Medium</span></div>
+          <a href="/exam-overview.html" class="card">
+            <div class="card-icon">📋</div>
+            <h3>CPA Exam Overview</h3>
+            <p>Complete breakdown of all 6 exam sections, format, scoring, time limits, and what to expect on test day.</p>
+            <span class="tag tag-gold">Essential</span>
           </a>
-          <a href="/heroes/augran.html" class="hero-card">
-            <div class="role">Fighter / Clash Lane</div>
-            <h3>Augran</h3>
-            <span class="tier tier-s">S-Tier · 55.1% WR</span>
-            <p class="desc">Clash lane monster with sustain, crowd control, and teamfight presence. Nearly impossible to 1v1 after level 4.</p>
-            <div class="meta"><span>🗡️ Clash Lane</span><span>⭐ Medium</span></div>
+          <a href="/cpa-requirements.html" class="card">
+            <div class="card-icon">✅</div>
+            <h3>CPA Requirements</h3>
+            <p>Education, experience, and licensing requirements by state. Check what you need before you apply.</p>
+            <span class="tag tag-blue">Must-Read</span>
           </a>
-          <a href="/heroes/yixing.html" class="hero-card">
-            <div class="role">Mage / Mid Lane</div>
-            <h3>Yixing</h3>
-            <span class="tier tier-s">S-Tier · 53% WR</span>
-            <p class="desc">The ultimate control mage. Zone denial, team-wide utility, and game-changing ultimate that wins teamfights alone.</p>
-            <div class="meta"><span>🔮 Mid Lane</span><span>⭐ Hard</span></div>
+          <a href="/study-resources.html" class="card">
+            <div class="card-icon">📖</div>
+            <h3>Study Resources</h3>
+            <p>Free study planners, formula cheat sheets, memory aids, and proven study strategies to maximize your prep time.</p>
+            <span class="tag tag-teal">Tools</span>
           </a>
         </div>
       </section>
 
-      <!-- LATEST GUIDES -->
+      <!-- EXAM SECTIONS -->
       <section>
         <div class="section-head">
-          <h2>📖 Latest Guides</h2>
-          <a href="/guides/" class="more">All Guides →</a>
+          <h2>🎯 CPA Exam Sections</h2>
+          <p style="color:var(--muted);font-size:.9rem;">3 Core + 3 Discipline — you take 4 total</p>
         </div>
-        <div class="guide-list">
-          <a href="/guides/beginner-guide.html" class="guide-item">
-            <span class="num">01</span>
+        <div class="card-grid">
+          <a href="/exam/far.html" class="card">
+            <div class="card-icon">💰</div>
+            <h3>FAR — Financial Accounting & Reporting</h3>
+            <p>Financial statements, GAAP, IFRS, government accounting, and non-profit reporting.</p>
+            <span class="tag tag-gold">Core · Required</span>
+          </a>
+          <a href="/exam/aud.html" class="card">
+            <div class="card-icon">🔍</div>
+            <h3>AUD — Auditing & Attestation</h3>
+            <p>Audit procedures, ethics, internal controls, risk assessment, and professional standards.</p>
+            <span class="tag tag-gold">Core · Required</span>
+          </a>
+          <a href="/exam/reg.html" class="card">
+            <div class="card-icon">⚖️</div>
+            <h3>REG — Regulation</h3>
+            <p>Federal taxation, business law, ethics, and professional responsibilities.</p>
+            <span class="tag tag-gold">Core · Required</span>
+          </a>
+          <a href="/exam/disciplines.html" class="card">
+            <div class="card-icon">🎯</div>
+            <h3>Discipline Sections</h3>
+            <p>Choose one: BAR (Business Analysis), ISC (Information Systems), or TCP (Tax Compliance).</p>
+            <span class="tag tag-teal">Choose 1 of 3</span>
+          </a>
+        </div>
+      </section>
+
+      <!-- STUDY STRATEGY -->
+      <section>
+        <div class="section-head">
+          <h2>🧠 Study Smarter, Not Harder</h2>
+          <a href="/blog/" class="more">All Tips →</a>
+        </div>
+        <div class="blog-list">
+          <a href="/blog/cpa-exam-order.html" class="blog-item">
+            <span class="date">Study Strategy</span>
             <div>
-              <h4>Complete Beginner's Guide to Honor of Kings</h4>
-              <p class="gmeta">Roles · Laning · Objectives · Rank System · 15 min read</p>
+              <span class="category">Strategy</span>
+              <h3>Best CPA Exam Order: Which Section Should You Take First?</h3>
+              <p>Strategic approach to ordering your exams for maximum efficiency and pass probability.</p>
             </div>
           </a>
-          <a href="/tier-list.html" class="guide-item">
-            <span class="num">02</span>
+          <a href="/blog/study-schedule.html" class="blog-item">
+            <span class="date">Study Planning</span>
             <div>
-              <h4>Honor of Kings Tier List — Patch 1.10.5</h4>
-              <p class="gmeta">All heroes ranked · Best picks per role · Win rate data</p>
+              <span class="category">Planning</span>
+              <h3>How to Build a CPA Study Schedule That Actually Works</h3>
+              <p>Realistic timeline planning, weekly goals, and how to balance work + life + CPA prep.</p>
             </div>
           </a>
-          <a href="/heroes/daji.html" class="guide-item">
-            <span class="num">03</span>
+          <a href="/blog/common-mistakes.html" class="blog-item">
+            <span class="date">Exam Tips</span>
             <div>
-              <h4>Daji Guide: The One-Shot Mage Queen</h4>
-              <p class="gmeta">Build · Arcana · Combos · Counters · 8 min read</p>
-            </div>
-          </a>
-          <a href="/heroes/dyadia.html" class="guide-item">
-            <span class="num">04</span>
-            <div>
-              <h4>Dyadia Support Guide: Best Healer in the Meta</h4>
-              <p class="gmeta">Positioning · Itemization · Synergy picks · 7 min read</p>
+              <span class="category">Tips</span>
+              <h3>10 Common CPA Exam Mistakes and How to Avoid Them</h3>
+              <p>The pitfalls that cause candidates to fail — and exactly how to sidestep them.</p>
             </div>
           </a>
         </div>
       </section>
 
-      <!-- AD PLACEHOLDER -->
-      <div class="ad-placeholder">[ AdSense Ad Unit — 728×90 Leaderboard ]</div>
-
-      <!-- TIER LIST TEASER -->
-      <div class="tier-teaser">
-        <h2>📊 Best Heroes to Carry Ranked</h2>
-        <p>Our tier list is updated every patch with real win rate data. See which heroes dominate each role.</p>
-        <a href="/tier-list.html" class="btn btn-red">View Full Tier List →</a>
+      <!-- FREE RESOURCES TEASER -->
+      <div class="highlight-box">
+        <h3>🎁 Free CPA Study Resources</h3>
+        <p>Download our free study planners, formula sheets, and memory aids — no email required. Start preparing today.</p>
+        <p style="margin-top:1rem;">
+          <a href="/study-resources.html" class="btn btn-primary" style="font-size:.85rem;">Browse Free Resources →</a>
+        </p>
       </div>
 
       <!-- NEWSLETTER -->
       <div class="newsletter">
-        <h3>📬 Never Miss a Meta Update</h3>
-        <p>Get the latest tier lists, hero builds, and patch analysis delivered to your inbox. No spam, just strategy.</p>
-        <form action="https://formspree.io/f/example" method="POST">
+        <h3>📬 Stay Updated on CPA Exam Changes</h3>
+        <p>Get study tips, exam updates, and new resources delivered to your inbox. No spam, just strategy.</p>
+        <form action="#" method="POST">
           <input type="email" name="email" placeholder="your@email.com" required>
           <button type="submit">Subscribe</button>
         </form>
@@ -250,14 +182,16 @@
 
   <footer>
     <div class="footer-links">
-      <a href="/heroes/">Heroes</a>
-      <a href="/tier-list.html">Tier List</a>
-      <a href="/guides/">Guides</a>
+      <a href="/what-is-cpa.html">CPA Guide</a>
+      <a href="/exam-overview.html">Exam Overview</a>
+      <a href="/cpa-requirements.html">Requirements</a>
+      <a href="/study-resources.html">Study Resources</a>
+      <a href="/blog/">Blog</a>
       <a href="/about.html">About</a>
       <a href="/contact.html">Contact</a>
       <a href="/sitemap.xml">Sitemap</a>
     </div>
-    <p>⚔️ SAIClaws &copy; 2025 · Honor of Kings strategy & guides · Not affiliated with Tencent/TiMi</p>
+    <p>📊 SAIClaws CPA &copy; 2025 · Free CPA Exam Study Guides & Resources · Not affiliated with AICPA or NASBA</p>
   </footer>
 </body>
 </html>
