@@ -873,8 +873,11 @@ const app = createApp({
     // Loading states
     const loading = reactive({
       reviews: false, memos: false, recentDiary: false,
-      knowledge: false, diary: false, allMemos: false, trash: false
+      knowledge: false, diary: false, allMemos: false, trash: false, gallery: false
     });
+    const uploadingImages = ref(false);
+    const galleryItems = ref([]);
+    const previewImage = ref(null);
 
     // Data
     const stats = reactive({
@@ -1113,15 +1116,15 @@ const app = createApp({
     // -- Memo CRUD --
     const memoModal = reactive({
       show: false, editingId: null, saving: false,
-      form: { content: '', memo_date: todayDateStr.value, priority: '' }
+      form: { content: '', memo_date: todayDateStr.value, priority: '', image_urls: [] }
     });
     const openMemoModal = (memo = null) => {
       if (memo) {
         memoModal.editingId = memo.id;
-        memoModal.form = { content: memo.content, memo_date: memo.memo_date, priority: memo.priority || '' };
+        memoModal.form = { content: memo.content, memo_date: memo.memo_date, priority: memo.priority || '', image_urls: memo.image_urls || [] };
       } else {
         memoModal.editingId = null;
-        memoModal.form = { content: '', memo_date: todayDateStr.value, priority: '' };
+        memoModal.form = { content: '', memo_date: todayDateStr.value, priority: '', image_urls: [] };
       }
       memoModal.show = true;
     };
@@ -1132,7 +1135,8 @@ const app = createApp({
         content: memoModal.form.content.trim(),
         memo_date: memoModal.form.memo_date,
         priority: memoModal.form.priority || null,
-        is_done: false
+        is_done: false,
+        image_urls: memoModal.form.image_urls || []
       };
       const { error } = await sb.from('daily_memos').insert(payload);
       memoModal.saving = false;
@@ -1158,15 +1162,15 @@ const app = createApp({
     // -- Diary CRUD --
     const diaryModal = reactive({
       show: false, saving: false,
-      form: { entry_date: todayDateStr.value, subject: '', chapter_name: '', oral_transcript: '', ai_summary: '', missing_points: '', mastery_score: null }
+      form: { entry_date: todayDateStr.value, subject: '', chapter_name: '', oral_transcript: '', ai_summary: '', missing_points: '', mastery_score: null, image_urls: [] }
     });
     const openDiaryModal = (diary = null) => {
       if (diary) {
         diaryModal.editingId = diary.id;
-        diaryModal.form = { entry_date: diary.entry_date, subject: diary.subject, chapter_name: diary.chapter_name || '', oral_transcript: diary.oral_transcript || '', ai_summary: diary.ai_summary || '', missing_points: diary.missing_points || '', mastery_score: diary.mastery_score || null };
+        diaryModal.form = { entry_date: diary.entry_date, subject: diary.subject, chapter_name: diary.chapter_name || '', oral_transcript: diary.oral_transcript || '', ai_summary: diary.ai_summary || '', missing_points: diary.missing_points || '', mastery_score: diary.mastery_score || null, image_urls: diary.image_urls || [] };
       } else {
         diaryModal.editingId = null;
-        diaryModal.form = { entry_date: todayDateStr.value, subject: '', chapter_name: '', oral_transcript: '', ai_summary: '', missing_points: '', mastery_score: null };
+        diaryModal.form = { entry_date: todayDateStr.value, subject: '', chapter_name: '', oral_transcript: '', ai_summary: '', missing_points: '', mastery_score: null, image_urls: [] };
       }
       diaryModal.show = true;
     };
@@ -1180,7 +1184,8 @@ const app = createApp({
         oral_transcript: diaryModal.form.oral_transcript || null,
         ai_summary: diaryModal.form.ai_summary || null,
         missing_points: diaryModal.form.missing_points || null,
-        mastery_score: diaryModal.form.mastery_score || null
+        mastery_score: diaryModal.form.mastery_score || null,
+        image_urls: diaryModal.form.image_urls || []
       };
       let error;
       if (diaryModal.editingId) {
@@ -1268,14 +1273,71 @@ const app = createApp({
       chatLoading.value = false;
     };
 
+    // -- Image upload --
+    const uploadImages = async (event, source) => {
+      const files = event.target.files;
+      if (!files.length) return;
+      uploadingImages.value = true;
+      const urls = [];
+      for (const file of files) {
+        try {
+          const ext = file.name.split('.').pop();
+          const path = 'public/' + Date.now() + '_' + Math.random().toString(36).slice(2,8) + '.' + ext;
+          const { error } = await sb.storage.from('images').upload(path, file, {
+            cacheControl: '3600',
+            upsert: false
+          });
+          if (error) { showToast('上传失败：' + error.message, 'error'); continue; }
+          const { data: urlData } = sb.storage.from('images').getPublicUrl(path);
+          urls.push(urlData.publicUrl);
+        } catch (e) {
+          showToast('上传失败：' + e.message, 'error');
+        }
+      }
+      if (source === 'memo') {
+        if (!memoModal.form.image_urls) memoModal.form.image_urls = [];
+        memoModal.form.image_urls.push(...urls);
+      } else {
+        if (!diaryModal.form.image_urls) diaryModal.form.image_urls = [];
+        diaryModal.form.image_urls.push(...urls);
+      }
+      uploadingImages.value = false;
+      event.target.value = '';
+      showToast('已上传 ' + urls.length + ' 张图片', 'success');
+    };
+
+    // -- Gallery --
+    const fetchGallery = async () => {
+      loading.gallery = true;
+      const items = [];
+      try {
+        const { data: memos } = await sb.from('daily_memos').select('id,memo_date,image_urls').not('image_urls','is',null).neq('is_deleted',true).order('memo_date',{ascending:false});
+        if (memos) {
+          memos.forEach(m => {
+            if (Array.isArray(m.image_urls)) m.image_urls.forEach(url => items.push({ url, source: 'memo', date: m.memo_date }));
+          });
+        }
+        const { data: diaries } = await sb.from('study_diary').select('id,entry_date,image_urls').not('image_urls','is',null).neq('is_deleted',true).order('entry_date',{ascending:false});
+        if (diaries) {
+          diaries.forEach(d => {
+            if (Array.isArray(d.image_urls)) d.image_urls.forEach(url => items.push({ url, source: 'diary', date: d.entry_date }));
+          });
+        }
+      } catch (e) {
+        console.log('Gallery:', e.message);
+      }
+      galleryItems.value = items;
+      loading.gallery = false;
+    };
+
     // -- View switching --
     const viewDataLoaders = {
       dashboard: refreshDashboard,
       knowledge: fetchKnowledge,
       diary: fetchDiary,
-      memos: fetchAllMemos, trash: fetchTrash
+      memos: fetchAllMemos, trash: fetchTrash, gallery: fetchGallery
     };
-    const loadedViews = reactive({ dashboard: false, knowledge: false, diary: false, memos: false, trash: false });
+    const loadedViews = reactive({ dashboard: false, knowledge: false, diary: false, memos: false, trash: false, gallery: false });
     const switchView = async (view) => {
       currentView.value = view;
       if (!loadedViews[view] && viewDataLoaders[view]) {
@@ -1305,7 +1367,8 @@ const app = createApp({
       diaryModal, openDiaryModal, saveDiary, deleteDiary,
       kbModal, openKbModal, saveKnowledge, deleteKnowledge,
       sendChat,
-      switchView, refreshDashboard, fetchTrash, restoreItem
+      switchView, refreshDashboard, fetchTrash, restoreItem,
+      galleryItems, previewImage, uploadingImages, uploadImages, fetchGallery
     };
   }
 });
