@@ -1,229 +1,1233 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta http-equiv="refresh" content="0;url=/app.html">
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SAIClaws 注会 — 零基础小白CPA备考指南 | 从入门到拿证</title>
-  <meta name="description" content="零基础也能考CPA！中国注册会计师（CICPA）小白备考指南：一步步带你了解CPA是什么、怎么考、怎么学。配合DeepSeek AI，让小白备考不再迷茫。">
-  <meta property="og:title" content="SAIClaws 注会 — 零基础小白CPA备考指南">
-  <meta property="og:description" content="零基础也能考CPA！从什么是借和贷开始，到拿证为止——全程小白友好。">
-  <meta property="og:type" content="website">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='28' font-size='26'>📊</text></svg>">
-  <link rel="stylesheet" href="/css/style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAIClaws 2.0 — CPA智能学习平台</title>
+<script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root {
+  --navy: #0a1628;
+  --navy-light: #111d35;
+  --navy-hover: #162240;
+  --blue: #2563eb;
+  --blue-bright: #3b82f6;
+  --blue-dim: rgba(37,99,235,0.12);
+  --gold: #f59e0b;
+  --gold-dim: rgba(245,158,11,0.12);
+  --teal: #0891b2;
+  --teal-dim: rgba(8,145,178,0.1);
+  --red: #ef4444;
+  --red-dim: rgba(239,68,68,0.1);
+  --green: #10b981;
+  --green-dim: rgba(16,185,129,0.12);
+  --text: #e2e8f0;
+  --text-heading: #f8fafc;
+  --muted: #94a3b8;
+  --muted-dark: #64748b;
+  --bg: #0a1628;
+  --bg-card: #111d35;
+  --border: rgba(148,163,184,0.1);
+  --border-light: rgba(148,163,184,0.15);
+  --radius: 12px;
+  --radius-sm: 8px;
+  --shadow: 0 4px 24px rgba(0,0,0,0.3);
+  --font: 'PingFang SC','Hiragino Sans GB','Microsoft YaHei','Noto Sans SC','Segoe UI','Inter',system-ui,-apple-system,sans-serif;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  background: var(--bg); color: var(--text);
+  font-family: var(--font); line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+::-webkit-scrollbar { width:6px; }
+::-webkit-scrollbar-track { background:var(--bg); }
+::-webkit-scrollbar-thumb { background:rgba(148,163,184,0.15); border-radius:3px; }
+::-webkit-scrollbar-thumb:hover { background:rgba(148,163,184,0.25); }
+
+/* Layout */
+#app { min-height:100vh; display:flex; flex-direction:column; }
+
+/* Nav */
+.nav {
+  position:sticky; top:0; z-index:100;
+  background:rgba(10,22,40,0.92); backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+}
+.nav-inner {
+  max-width:1200px; margin:0 auto; padding:0 1.5rem;
+  display:flex; align-items:center; justify-content:space-between; height:60px;
+}
+.nav-logo { font-size:1.25rem; font-weight:800; color:var(--blue-bright); display:flex; align-items:center; gap:.5rem; letter-spacing:-0.02em; }
+.nav-logo .dot { color:var(--gold); }
+.nav-logo span { color:var(--muted); font-weight:400; font-size:.85rem; }
+.nav-tabs { display:flex; gap:.25rem; list-style:none; flex-wrap:wrap; }
+.nav-tab {
+  padding:.4rem .85rem; border-radius:6px;
+  font-size:.85rem; color:var(--muted); cursor:pointer;
+  transition:color .2s,background .2s; border:none; background:none; font-family:inherit;
+}
+.nav-tab:hover, .nav-tab.active { color:var(--text); background:rgba(255,255,255,0.05); }
+.nav-tab.has-badge { position:relative; }
+.nav-tab .badge-dot {
+  position:absolute; top:6px; right:6px;
+  width:7px; height:7px; border-radius:50%; background:var(--gold);
+}
+
+/* Main */
+.main { flex:1; max-width:1200px; width:100%; margin:0 auto; padding:1.5rem; }
+
+/* Cards */
+.card {
+  background:var(--bg-card); border:1px solid var(--border);
+  border-radius:var(--radius); padding:1.5rem;
+  transition:border-color .2s,transform .2s;
+}
+.card:hover { border-color:var(--border-light); }
+.card-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:1rem; flex-wrap:wrap; gap:.5rem; }
+.card-header h2 { font-size:1.3rem; font-weight:700; color:var(--text-heading); letter-spacing:-0.02em; }
+.card-header h3 { font-size:1.1rem; font-weight:700; color:var(--text-heading); }
+
+/* Buttons */
+.btn {
+  padding:.55rem 1.2rem; border-radius:var(--radius-sm);
+  font-weight:600; font-size:.85rem; cursor:pointer; border:none;
+  transition:transform .15s,box-shadow .15s,background .15s;
+  display:inline-flex; align-items:center; gap:.4rem; font-family:inherit;
+}
+.btn:hover { transform:translateY(-1px); }
+.btn:active { transform:translateY(0); }
+.btn-primary { background:var(--blue); color:#fff; }
+.btn-primary:hover { background:var(--blue-bright); box-shadow:0 4px 16px rgba(37,99,235,0.3); }
+.btn-outline { background:transparent; border:1px solid var(--border-light); color:var(--text); }
+.btn-outline:hover { border-color:var(--blue-bright); color:var(--blue-bright); }
+.btn-gold { background:linear-gradient(135deg,var(--gold),#d97706); color:#1a1a2e; font-weight:700; }
+.btn-gold:hover { box-shadow:0 4px 16px rgba(245,158,11,0.35); }
+.btn-sm { padding:.35rem .8rem; font-size:.78rem; }
+.btn-danger { background:var(--red); color:#fff; }
+.btn-danger:hover { background:#dc2626; }
+.btn-success { background:var(--green); color:#fff; }
+.btn-success:hover { background:#059669; }
+.btn-ghost { background:transparent; color:var(--muted); }
+.btn-ghost:hover { color:var(--text); background:rgba(255,255,255,0.05); }
+.btn:disabled { opacity:0.5; cursor:not-allowed; transform:none; }
+
+/* Inputs */
+.input {
+  padding:.6rem 1rem; border-radius:var(--radius-sm);
+  border:1px solid var(--border); background:var(--bg);
+  color:var(--text); font-size:.88rem; font-family:inherit;
+  transition:border-color .2s; width:100%;
+}
+.input:focus { outline:2px solid var(--blue); outline-offset:-1px; border-color:transparent; }
+textarea.input { resize:vertical; min-height:80px; }
+select.input { cursor:pointer; }
+
+/* Tags/Badges */
+.tag {
+  display:inline-block; padding:.15rem .6rem; border-radius:4px;
+  font-size:.7rem; font-weight:700; letter-spacing:.05em;
+}
+.tag-blue { background:var(--blue-dim); color:var(--blue-bright); }
+.tag-gold { background:var(--gold-dim); color:var(--gold); }
+.tag-teal { background:var(--teal-dim); color:var(--teal); }
+.tag-green { background:var(--green-dim); color:var(--green); }
+.tag-red { background:var(--red-dim); color:var(--red); }
+
+/* Stats */
+.stats-row { display:flex; gap:1.5rem; flex-wrap:wrap; margin-bottom:1.5rem; }
+.stat-card {
+  flex:1; min-width:140px; background:var(--bg-card);
+  border:1px solid var(--border); border-radius:var(--radius); padding:1.2rem 1.5rem;
+  text-align:center;
+}
+.stat-num { font-size:2rem; font-weight:800; color:var(--blue-bright); line-height:1.2; }
+.stat-label { color:var(--muted); font-size:.8rem; margin-top:.25rem; }
+
+/* Grids */
+.grid-2 { display:grid; grid-template-columns:repeat(auto-fill,minmax(340px,1fr)); gap:1.25rem; }
+.grid-3 { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:1.25rem; }
+
+/* Spacing */
+.mt-1 { margin-top:.5rem; }
+.mt-2 { margin-top:1rem; }
+.mt-3 { margin-top:1.5rem; }
+.mb-1 { margin-bottom:.5rem; }
+.mb-2 { margin-bottom:1rem; }
+.mb-3 { margin-bottom:1.5rem; }
+.gap-1 { gap:.5rem; }
+.gap-2 { gap:1rem; }
+.flex { display:flex; }
+.flex-wrap { flex-wrap:wrap; }
+.flex-col { flex-direction:column; }
+.items-center { align-items:center; }
+.justify-between { justify-content:space-between; }
+.text-center { text-align:center; }
+.text-muted { color:var(--muted); }
+.text-sm { font-size:.85rem; }
+.text-xs { font-size:.75rem; }
+.text-heading { color:var(--text-heading); }
+.text-gold { color:var(--gold); }
+.text-blue { color:var(--blue-bright); }
+.text-green { color:var(--green); }
+.text-red { color:var(--red); }
+.font-bold { font-weight:700; }
+.w-full { width:100%; }
+
+/* Memo item */
+.memo-item {
+  display:flex; align-items:flex-start; gap:.8rem;
+  padding:.8rem 0; border-bottom:1px solid var(--border);
+}
+.memo-item:last-child { border-bottom:none; }
+.memo-check {
+  width:22px; height:22px; border-radius:6px;
+  border:2px solid var(--border-light); flex-shrink:0;
+  cursor:pointer; display:flex; align-items:center; justify-content:center;
+  transition:all .2s; margin-top:2px;
+}
+.memo-check.done { background:var(--green); border-color:var(--green); }
+.memo-check.done::after { content:'✓'; color:#fff; font-size:12px; font-weight:700; }
+.memo-content { flex:1; }
+.memo-text { font-size:.9rem; }
+.memo-text.done { text-decoration:line-through; color:var(--muted-dark); }
+.memo-priority { font-size:.68rem; font-weight:700; }
+.priority-high { color:var(--red); }
+.priority-medium { color:var(--gold); }
+.priority-low { color:var(--muted); }
+
+/* Knowledge cards */
+.kb-card {
+  background:var(--bg-card); border:1px solid var(--border);
+  border-radius:var(--radius); padding:1.3rem;
+  transition:border-color .2s,transform .2s;
+}
+.kb-card:hover { border-color:var(--border-light); transform:translateY(-2px); }
+.kb-subject { font-size:.75rem; font-weight:700; color:var(--gold); text-transform:uppercase; letter-spacing:.05em; margin-bottom:.3rem; }
+.kb-chapter { font-size:.75rem; color:var(--muted-dark); margin-bottom:.5rem; }
+.kb-title { font-size:1rem; font-weight:600; color:var(--text-heading); margin-bottom:.5rem; }
+.kb-meta { font-size:.78rem; color:var(--muted); display:flex; gap:.8rem; flex-wrap:wrap; align-items:center; }
+
+/* Diary timeline */
+.timeline { position:relative; padding-left:2rem; }
+.timeline::before {
+  content:''; position:absolute; left:8px; top:8px; bottom:8px;
+  width:2px; background:var(--border);
+}
+.timeline-item { position:relative; margin-bottom:1.5rem; }
+.timeline-dot {
+  position:absolute; left:-2rem; top:4px;
+  width:18px; height:18px; border-radius:50%; background:var(--blue);
+  border:3px solid var(--bg);
+}
+.timeline-date { font-size:.75rem; color:var(--muted-dark); margin-bottom:.3rem; }
+.timeline-card {
+  background:var(--bg-card); border:1px solid var(--border);
+  border-radius:var(--radius); padding:1.2rem 1.5rem;
+}
+.timeline-card h3 { font-size:1rem; font-weight:600; color:var(--text-heading); margin-bottom:.3rem; }
+.timeline-card p { font-size:.85rem; color:var(--muted); line-height:1.6; margin-bottom:.4rem; }
+.score-badge {
+  display:inline-flex; align-items:center; gap:.3rem;
+  padding:.2rem .6rem; border-radius:4px; font-size:.78rem; font-weight:700;
+}
+
+/* Modal */
+.modal-overlay {
+  position:fixed; inset:0; background:rgba(0,0,0,0.6);
+  display:flex; align-items:center; justify-content:center;
+  z-index:200; backdrop-filter:blur(4px);
+}
+.modal {
+  background:var(--bg-card); border:1px solid var(--border);
+  border-radius:var(--radius); width:90%; max-width:560px;
+  max-height:85vh; overflow-y:auto; padding:1.8rem;
+}
+.modal h2 { font-size:1.25rem; font-weight:700; color:var(--text-heading); margin-bottom:1.2rem; }
+.modal .form-group { margin-bottom:1rem; }
+.modal .form-group label { display:block; font-size:.82rem; color:var(--muted); margin-bottom:.3rem; font-weight:600; }
+.modal-actions { display:flex; gap:.8rem; justify-content:flex-end; margin-top:1.5rem; }
+
+/* AI Chat */
+.chat-fab {
+  position:fixed; bottom:1.5rem; right:1.5rem; z-index:150;
+  width:56px; height:56px; border-radius:50%;
+  background:linear-gradient(135deg,var(--gold),#d97706);
+  border:none; cursor:pointer; display:flex; align-items:center; justify-content:center;
+  box-shadow:0 4px 20px rgba(245,158,11,0.4);
+  transition:transform .2s,box-shadow .2s; font-size:1.5rem;
+}
+.chat-fab:hover { transform:scale(1.1); box-shadow:0 6px 28px rgba(245,158,11,0.5); }
+.chat-panel {
+  position:fixed; bottom:5rem; right:1.5rem; z-index:150;
+  width:380px; max-width:90vw; height:520px; max-height:70vh;
+  background:var(--bg-card); border:1px solid var(--border);
+  border-radius:var(--radius); display:flex; flex-direction:column;
+  box-shadow:0 8px 40px rgba(0,0,0,0.5);
+}
+.chat-header {
+  padding:1rem 1.2rem; border-bottom:1px solid var(--border);
+  display:flex; align-items:center; justify-content:space-between;
+}
+.chat-header h3 { font-size:1rem; font-weight:700; color:var(--gold); }
+.chat-body {
+  flex:1; overflow-y:auto; padding:1rem 1.2rem;
+  display:flex; flex-direction:column; gap:.8rem;
+}
+.chat-message {
+  padding:.7rem 1rem; border-radius:var(--radius-sm); font-size:.85rem; line-height:1.5;
+  max-width:90%;
+}
+.chat-message.bot { background:var(--blue-dim); color:var(--text); align-self:flex-start; border:1px solid rgba(37,99,235,0.15); }
+.chat-message.user { background:var(--blue); color:#fff; align-self:flex-end; }
+.chat-input-area {
+  padding:.8rem 1.2rem; border-top:1px solid var(--border);
+  display:flex; gap:.5rem;
+}
+.chat-input-area input { flex:1; }
+.chat-placeholder {
+  flex:1; display:flex; align-items:center; justify-content:center;
+  text-align:center; padding:2rem;
+}
+.chat-placeholder p { color:var(--muted); font-size:.85rem; line-height:1.6; }
+
+/* Loading */
+.loading { text-align:center; padding:2rem; color:var(--muted); }
+.spinner {
+  display:inline-block; width:24px; height:24px;
+  border:2px solid var(--border); border-top-color:var(--blue-bright);
+  border-radius:50%; animation:spin .6s linear infinite;
+}
+@keyframes spin { to { transform:rotate(360deg); } }
+
+/* Empty state */
+.empty-state { text-align:center; padding:2rem; color:var(--muted-dark); }
+.empty-state .icon { font-size:2.5rem; margin-bottom:.8rem; opacity:.4; }
+
+/* Toast */
+.toast {
+  position:fixed; top:1rem; right:1rem; z-index:300;
+  padding:.8rem 1.5rem; border-radius:var(--radius-sm);
+  font-size:.88rem; font-weight:600; color:#fff;
+  animation:slideIn .3s ease;
+}
+.toast-success { background:var(--green); }
+.toast-error { background:var(--red); }
+@keyframes slideIn { from { transform:translateX(100%); opacity:0; } to { transform:translateX(0); opacity:1; } }
+
+/* Responsive */
+@media (max-width:768px) {
+  .nav-inner { flex-direction:column; height:auto; padding:1rem; gap:.8rem; }
+  .nav-tabs { justify-content:center; }
+  .grid-2 { grid-template-columns:1fr; }
+  .grid-3 { grid-template-columns:1fr 1fr; }
+  .stats-row { flex-direction:column; }
+  .chat-panel { width:calc(100vw - 2rem); right:1rem; bottom:5rem; }
+}
+@media (max-width:480px) {
+  .grid-3 { grid-template-columns:1fr; }
+  .nav-tab { font-size:.78rem; padding:.3rem .5rem; }
+}
+</style>
 </head>
 <body>
+<div id="app">
+  <!-- Toast -->
+  <div v-if="toast.show" :class="'toast toast-' + toast.type">{{ toast.message }}</div>
+
+  <!-- Navigation -->
   <nav class="nav">
-    <div class="nav-in">
-      <a href="/" class="nav-logo">📊 SAI<span>claws 注会</span><span class="dot">●</span></a>
-      <ul class="nav-links">
-        <li><a href="/what-is-cpa.html">注会是什么</a></li>
-        <li><a href="/exam-overview.html">考试概览</a></li>
-        <li><a href="/study-resources.html">学习资源</a></li>
-        <li><a href="/ai-cpa-learning.html">AI学习</a></li>
-        <li><a href="/blog/">学习笔记</a></li>
-        <li><a href="/about.html">关于</a></li>
+    <div class="nav-inner">
+      <div class="nav-logo">
+        SAIClaws<span class="dot">·</span><span>CPA智能学习平台</span>
+      </div>
+      <ul class="nav-tabs">
+        <li>
+          <button class="nav-tab" :class="{ active: currentView === 'dashboard' }" @click="switchView('dashboard')">📊 工作台</button>
+        </li>
+        <li>
+          <button class="nav-tab" :class="{ active: currentView === 'knowledge' }" @click="switchView('knowledge')">📚 知识库</button>
+        </li>
+        <li>
+          <button class="nav-tab" :class="{ active: currentView === 'diary' }" @click="switchView('diary')">📝 学习日记</button>
+        </li>
+        <li>
+          <button class="nav-tab" :class="{ active: currentView === 'memos' }" @click="switchView('memos')">📋 备忘录</button>
+        </li>
       </ul>
     </div>
   </nav>
 
-  <main>
-    <section class="hero">
-      <div class="hero-badge">🐵 零基础小白友好 · 中国注册会计师（CICPA）备考站</div>
-      <h1>不知道什么是"借"和"贷"？<br><span class="highlight">没关系，从这里开始</span></h1>
-      <p>CPA不是会计专业才能考的。不管你是什么背景——只要有大专学历，就可以报名。<br>这一站，陪你从零认识CPA，一步一步走到拿证。</p>
-      <div class="hero-cta">
-        <a href="/what-is-cpa.html" class="btn btn-primary">🔰 小白入门：什么是CPA？</a>
-        <a href="/ai-cpa-learning.html" class="btn btn-outline">🤖 用AI辅助学CPA</a>
-      </div>
-    </section>
+  <!-- Main Content -->
+  <main class="main">
 
-    <div class="container">
-      <!-- 小白最关心的三个问题 -->
+    <!-- ============ DASHBOARD ============ -->
+    <div v-if="currentView === 'dashboard'">
+      <!-- Date & Greeting -->
+      <div class="card mb-3">
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;">
+          <div>
+            <h2 style="margin-bottom:.3rem;">{{ todayString }}</h2>
+            <p class="text-muted text-sm">{{ weekdayString }} · 加油，每一天都是通往CPA的阶梯 ✨</p>
+          </div>
+          <div style="display:flex;gap:.5rem;">
+            <button class="btn btn-outline btn-sm" @click="refreshDashboard">🔄 刷新</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stats -->
       <div class="stats-row">
-        <div class="stat-item">
-          <div class="stat-num">不限制</div>
-          <div class="stat-label">任何专业都能考</div>
+        <div class="stat-card">
+          <div class="stat-num">{{ stats.totalKnowledge }}</div>
+          <div class="stat-label">知识库条目</div>
         </div>
-        <div class="stat-item">
-          <div class="stat-num">大专起</div>
-          <div class="stat-label">学历要求不高</div>
+        <div class="stat-card">
+          <div class="stat-num">{{ stats.totalDiary }}</div>
+          <div class="stat-label">学习日记</div>
         </div>
-        <div class="stat-item">
-          <div class="stat-num">5年</div>
-          <div class="stat-label">6科通过时间充裕</div>
+        <div class="stat-card">
+          <div class="stat-num">{{ stats.todayMemos }}</div>
+          <div class="stat-label">今日备忘录</div>
         </div>
-      </div>
-
-      <!-- 小白三步走 -->
-      <section>
-        <div class="section-head">
-          <h2>🗺️ 小白CPA三步走</h2>
-          <p style="color:var(--muted);font-size:.9rem;">不用一口气搞懂所有东西，按这个顺序来就行</p>
+        <div class="stat-card">
+          <div class="stat-num">{{ stats.todayReviews }}</div>
+          <div class="stat-label">今日复习计划</div>
         </div>
-        <div class="card-grid">
-          <a href="/what-is-cpa.html" class="card">
-            <div class="card-icon">1️⃣</div>
-            <h3>第一步：了解CPA是什么</h3>
-            <p>CPA证书到底值不值得考？考出来能干什么？不是会计专业能考吗？——先弄清楚这些问题，再决定要不要出发。</p>
-            <span class="tag tag-blue">5分钟读完</span>
-          </a>
-          <a href="/exam-overview.html" class="card">
-            <div class="card-icon">2️⃣</div>
-            <h3>第二步：看看考什么</h3>
-            <p>6+1考试体系是什么？会计、审计、财管……每科到底学什么？难不难？用小白能听懂的话讲清楚。</p>
-            <span class="tag tag-gold">10分钟读完</span>
-          </a>
-          <a href="/study-resources.html" class="card">
-            <div class="card-icon">3️⃣</div>
-            <h3>第三步：开始学习</h3>
-            <p>决定了要考？这里有小白专属的学习路径、资源推荐、AI辅助方法。从零开始，有人带路。</p>
-            <span class="tag tag-teal">开始行动</span>
-          </a>
-        </div>
-      </section>
-
-      <!-- 给小白定心丸 -->
-      <div class="highlight-box" style="margin:2rem 0;">
-        <h3>💬 小白最常问的三个问题</h3>
-
-        <div style="margin-bottom:1.5rem;">
-          <p style="font-weight:700;color:var(--gold);margin-bottom:.3rem;">Q1：我不是会计专业的，能考CPA吗？</p>
-          <p style="color:var(--text);">能。CPA不限制专业，任何专业只要有大专以上学历就能报考。事实上，每年有大量非会计专业的人通过CPA——学物理的、学英语的、学计算机的都有。会计知识是<strong>可以后天学出来的</strong>，不是天生的。</p>
-        </div>
-
-        <div style="margin-bottom:1.5rem;">
-          <p style="font-weight:700;color:var(--gold);margin-bottom:.3rem;">Q2：我完全零基础，要学多久？</p>
-          <p style="color:var(--text);">一科大约需要300-400小时的有效学习时间。如果你每天能学2小时，一科大概5-6个月。6科全部考下来，大多数人需要2-3年。别被这个时间吓到——<strong>CPA考的不是智商，是持续性和执行力</strong>。每天学一点，比突击有效得多。</p>
-        </div>
-
-        <div style="margin-bottom:0;">
-          <p style="font-weight:700;color:var(--gold);margin-bottom:.3rem;">Q3：现在开始学，还来得及吗？</p>
-          <p style="color:var(--text);">来得及。只要开始了，就比昨天的自己更进一步。CPA没有"最佳开始时间"，只有"现在"。<strong>最好的种树时间是十年前，其次是现在。</strong></p>
+        <div class="stat-card">
+          <div class="stat-num">{{ stats.avgMastery }}%</div>
+          <div class="stat-label">平均掌握度</div>
         </div>
       </div>
 
-      <!-- 专业阶段6科 — 小白视角介绍 -->
-      <section>
-        <div class="section-head">
-          <h2>📚 CPA考什么？6门科目（小白版介绍）</h2>
-          <p style="color:var(--muted);font-size:.9rem;">别被科目名字吓到，每门课都是可以学会的</p>
-        </div>
-        <div class="card-grid">
-          <a href="/exam/accounting.html" class="card">
-            <div class="card-icon">📐</div>
-            <h3>会计</h3>
-            <p>学什么：企业的钱怎么记账。这是所有科目的基础，虽然最厚(700页)，但学完它，后面的科目就通了。</p>
-            <span class="tag tag-gold">地基 · 建议第一门学</span>
-          </a>
-          <a href="/exam/auditing.html" class="card">
-            <div class="card-icon">🔍</div>
-            <h3>审计</h3>
-            <p>学什么：怎么查账，看看别人记的账有没有问题。像侦探破案一样的科目。</p>
-            <span class="tag tag-gold">逻辑 · 建议会计之后学</span>
-          </a>
-          <a href="/exam/finance.html" class="card">
-            <div class="card-icon">🧮</div>
-            <h3>财务成本管理</h3>
-            <p>学什么：怎么算钱更划算。比如"这个项目值得投吗？""公司值多少钱？"——数学好的会觉得很有趣。</p>
-            <span class="tag tag-gold">计算 · 数学好的人占优势</span>
-          </a>
-          <a href="/exam/tax-law.html" class="card">
-            <div class="card-icon">🧾</div>
-            <h3>税法</h3>
-            <p>学什么：国家怎么收税。增值税、个税、企业所得税……学完你会变成一个"行走的税务计算器"。</p>
-            <span class="tag tag-gold">记忆 · 碎但实用</span>
-          </a>
-          <a href="/exam/economic-law.html" class="card">
-            <div class="card-icon">⚖️</div>
-            <h3>经济法</h3>
-            <p>学什么：公司法、合同法、证券法……商业世界的基本规则。法条多但套路明显，适合搭配一门计算量大的科目一起学。</p>
-            <span class="tag tag-gold">背诵 · 难度最低之一</span>
-          </a>
-          <a href="/exam/strategy.html" class="card">
-            <div class="card-icon">🗺️</div>
-            <h3>公司战略</h3>
-            <p>学什么：一家公司怎么制定战略、怎么管理风险。内容最少、框架最清晰，很多人把它作为入门第一科建立信心。</p>
-            <span class="tag tag-teal">最友好 · 小白首选入门科</span>
-          </a>
-        </div>
-      </section>
-
-      <!-- AI辅助学习 -->
-      <div class="tier-teaser">
-        <h2>🤖 小白 + AI = 备考加速器</h2>
-        <p>DeepSeek V4 Pro 完全免费。把它当成一个24小时在线、永远不会不耐烦的辅导老师。零基础的问题随便问，它会用你能听懂的方式解释。</p>
-        <a href="/ai-cpa-learning.html" class="btn btn-gold">了解如何用AI辅助学CPA →</a>
-      </div>
-
-      <!-- 学习笔记 -->
-      <section>
-        <div class="section-head">
-          <h2>📝 小白学习笔记</h2>
-          <a href="/blog/" class="more">全部文章 →</a>
-        </div>
-        <div class="blog-list">
-          <a href="/blog/subject-order.html" class="blog-item">
-            <span class="date">新手必读</span>
-            <div>
-              <span class="category">策略</span>
-              <h3>零基础小白：6科先学哪科？一年报几门？</h3>
-              <p>从完全不会会计开始，CPA六科的学习顺序怎么排最科学。</p>
+      <div class="grid-2">
+        <!-- Today's Review List -->
+        <div class="card">
+          <div class="card-header">
+            <h3>📅 今日复习清单</h3>
+          </div>
+          <div v-if="loading.reviews" class="loading"><div class="spinner"></div></div>
+          <div v-else-if="todayReviews.length === 0" class="empty-state">
+            <div class="icon">🎉</div>
+            <p>今天没有待复习内容，太棒了！</p>
+          </div>
+          <div v-else>
+            <div v-for="r in todayReviews" :key="r.id" style="padding:.6rem 0;border-bottom:1px solid var(--border);font-size:.88rem;">
+              <div class="flex items-center justify-between">
+                <span class="font-bold" style="color:var(--text);">{{ r.topic_name || r.knowledge_point_id }}</span>
+                <span class="tag" :class="getSubjectTagClass(r.subject)">{{ r.subject }}</span>
+              </div>
+              <div class="text-xs text-muted mt-1">
+                已复习 {{ r.review_count || 0 }} 次 · 下次: {{ formatDate(r.next_review_date) }}
+              </div>
             </div>
-          </a>
-          <a href="/blog/study-plan.html" class="blog-item">
-            <span class="date">新手必读</span>
-            <div>
-              <span class="category">规划</span>
-              <h3>小白备考CPA：每天学多久？怎么制定学习计划？</h3>
-              <p>从零开始，一步步告诉你每天做什么，做一个能坚持到底的计划。</p>
-            </div>
-          </a>
-          <a href="/blog/avoid-pitfalls.html" class="blog-item">
-            <span class="date">新手必读</span>
-            <div>
-              <span class="category">经验</span>
-              <h3>小白备考CPA最容易踩的10个坑</h3>
-              <p>无数人用血泪换来的教训——看完这篇，等于少走一年弯路。</p>
-            </div>
-          </a>
+          </div>
         </div>
-      </section>
 
-      <!-- 免费资源 -->
-      <div class="highlight-box">
-        <h3>🎁 小白专属：免费学习资源</h3>
-        <p>学习计划模板、各科入门指南、记忆口诀汇总——全部免费，不用注册，拿来就用。</p>
-        <p style="margin-top:1rem;">
-          <a href="/study-resources.html" class="btn btn-primary" style="font-size:.85rem;">查看小白学习资源 →</a>
-        </p>
+        <!-- Today's Memos -->
+        <div class="card">
+          <div class="card-header">
+            <h3>📋 今日备忘录</h3>
+            <button class="btn btn-primary btn-sm" @click="openMemoModal()">+ 添加</button>
+          </div>
+          <div v-if="loading.memos" class="loading"><div class="spinner"></div></div>
+          <div v-else-if="todayMemos.length === 0" class="empty-state">
+            <div class="icon">📝</div>
+            <p>今天还没有备忘录</p>
+          </div>
+          <div v-else>
+            <div v-for="m in todayMemos" :key="m.id" class="memo-item">
+              <div class="memo-check" :class="{ done: m.is_done }" @click="toggleMemo(m)"></div>
+              <div class="memo-content">
+                <div class="memo-text" :class="{ done: m.is_done }">{{ m.content }}</div>
+                <div v-if="m.priority" class="memo-priority mt-1" :class="'priority-' + m.priority">⚑ {{ priorityLabel(m.priority) }}</div>
+              </div>
+              <button class="btn btn-ghost btn-sm" @click="deleteMemo(m.id)" title="删除">🗑</button>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <!-- 鼓励语 -->
-      <div style="text-align:center;padding:2rem 0;color:var(--muted);">
-        <p style="font-size:1rem;line-height:2;">
-          🐵<br>
-          <em>每一个CPA大神，都曾经是小白。<br>
-          他们不是天生就会，只是比你早开始了几年。<br>
-          现在，轮到你了。</em>
-        </p>
+      <!-- Recent Diary Entries -->
+      <div class="card mt-3">
+        <div class="card-header">
+          <h3>📝 最近学习日记</h3>
+          <button class="btn btn-outline btn-sm" @click="switchView('diary')">查看全部 →</button>
+        </div>
+        <div v-if="loading.recentDiary" class="loading"><div class="spinner"></div></div>
+        <div v-else-if="recentDiary.length === 0" class="empty-state">
+          <div class="icon">📖</div>
+          <p>还没有学习日记，开始记录吧！</p>
+        </div>
+        <div v-else style="display:flex;flex-direction:column;gap:.8rem;">
+          <div v-for="d in recentDiary" :key="d.id" style="display:flex;gap:1rem;align-items:flex-start;padding:.5rem 0;border-bottom:1px solid var(--border);">
+            <div class="text-xs text-muted" style="min-width:80px;padding-top:3px;">{{ formatDate(d.entry_date) }}</div>
+            <div style="flex:1;">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="tag" :class="getSubjectTagClass(d.subject)">{{ d.subject }}</span>
+                <span v-if="d.mastery_score" class="score-badge" :style="getScoreStyle(d.mastery_score)">🏆 {{ d.mastery_score }}%</span>
+              </div>
+              <p class="text-sm text-muted" style="margin:0;">{{ truncateText(d.ai_summary || d.oral_transcript, 120) }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ KNOWLEDGE BASE ============ -->
+    <div v-if="currentView === 'knowledge'">
+      <div class="card mb-3">
+        <div class="card-header">
+          <h2>📚 知识库</h2>
+          <span class="text-muted text-sm">共 {{ filteredKnowledge.length }} 个知识点</span>
+        </div>
+        <div class="flex gap-2 flex-wrap items-center">
+          <select class="input" style="max-width:160px;" v-model="kbFilter.subject">
+            <option value="">全部科目</option>
+            <option value="会计">会计</option>
+            <option value="税法">税法</option>
+            <option value="经济法">经济法</option>
+          </select>
+          <select class="input" style="max-width:200px;" v-model="kbFilter.chapter">
+            <option value="">全部章节</option>
+            <option v-for="ch in kbChapters" :key="ch" :value="ch">{{ ch }}</option>
+          </select>
+          <select class="input" style="max-width:140px;" v-model="kbFilter.level">
+            <option value="">全部要求</option>
+            <option value="了解">了解</option>
+            <option value="理解">理解</option>
+            <option value="掌握">掌握</option>
+          </select>
+          <input class="input" style="max-width:240px;" v-model="kbFilter.search" placeholder="🔍 搜索知识点...">
+          <button class="btn btn-ghost btn-sm" @click="resetKbFilter">清除筛选</button>
+        </div>
+        <button class="btn btn-primary btn-sm mt-2" @click="openKbModal()">+ 新增知识点</button>
+      </div>
+
+      <div v-if="loading.knowledge" class="loading"><div class="spinner"></div><p class="mt-1">加载知识库...</p></div>
+      <div v-else-if="filteredKnowledge.length === 0" class="empty-state">
+        <div class="icon">📭</div>
+        <p>没有找到匹配的知识点</p>
+        <button class="btn btn-primary btn-sm mt-2" @click="openKbModal()">+ 新增知识点</button>
+      </div>
+      <div v-else class="grid-3">
+        <div v-for="k in filteredKnowledge" :key="k.id" class="kb-card">
+          <div class="kb-subject">{{ k.subject }}</div>
+          <div class="kb-chapter">第{{ k.chapter_no }}章 · {{ k.chapter_name }}</div>
+          <div class="kb-title">{{ k.topic_name }}</div>
+          <p class="text-sm text-muted mb-2" style="line-height:1.5;">{{ truncateText(k.content, 100) }}</p>
+          <div class="kb-meta">
+            <span class="tag" :class="getLevelTagClass(k.syllabus_level)">{{ k.syllabus_level || '了解' }}</span>
+            <span v-if="k.key_points" class="text-xs text-gold">🔑 {{ k.key_points }}</span>
+            <span v-if="k.exam_years" class="text-xs text-muted">📅 {{ k.exam_years }}</span>
+          </div>
+          <div v-if="k.common_mistakes" class="mt-2 text-xs" style="color:var(--red);">
+            ⚠️ 易错: {{ truncateText(k.common_mistakes, 60) }}
+          </div>
+          <details style="margin-top:.8rem;">
+            <summary style="cursor:pointer;color:var(--blue-bright);font-size:.8rem;font-weight:600;">查看详情</summary>
+            <div class="mt-2 text-sm" style="color:var(--muted);line-height:1.7;white-space:pre-wrap;">{{ k.content }}</div>
+            <div v-if="k.key_points" class="mt-2 text-sm"><strong style="color:var(--gold);">重点：</strong>{{ k.key_points }}</div>
+            <div v-if="k.common_mistakes" class="mt-2 text-sm"><strong style="color:var(--red);">常见错误：</strong>{{ k.common_mistakes }}</div>
+            <div v-if="k.exam_years" class="mt-2 text-sm"><strong style="color:var(--muted);">历年考题：</strong>{{ k.exam_years }}</div>
+          </details>
+          <div class="flex gap-1 mt-2" style="justify-content:flex-end">
+            <button class="btn btn-ghost btn-sm" @click="openKbModal(k)">✏️ 编辑</button>
+            <button class="btn btn-ghost btn-sm" style="color:var(--red)" @click="deleteKnowledge(k.id)">🗑</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ STUDY DIARY ============ -->
+    <div v-if="currentView === 'diary'">
+      <div class="card mb-3">
+        <div class="card-header">
+          <h2>📝 学习日记</h2>
+          <button class="btn btn-primary" @click="openDiaryModal()">✍️ 写日记</button>
+        </div>
+        <div class="flex gap-2 flex-wrap items-center">
+          <select class="input" style="max-width:160px;" v-model="diaryFilter.subject">
+            <option value="">全部科目</option>
+            <option value="会计">会计</option>
+            <option value="税法">税法</option>
+            <option value="经济法">经济法</option>
+          </select>
+          <input class="input" style="max-width:200px;" v-model="diaryFilter.search" placeholder="🔍 搜索日记...">
+        </div>
+      </div>
+
+      <div v-if="loading.diary" class="loading"><div class="spinner"></div><p class="mt-1">加载日记...</p></div>
+      <div v-else-if="filteredDiary.length === 0" class="empty-state">
+        <div class="icon">📖</div>
+        <p>还没有学习日记</p>
+        <button class="btn btn-primary mt-2" @click="openDiaryModal()">✍️ 写第一篇日记</button>
+      </div>
+      <div v-else class="timeline">
+        <div v-for="d in filteredDiary" :key="d.id" class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-date">{{ formatDate(d.entry_date) }}</div>
+          <div class="timeline-card">
+            <div class="flex items-center justify-between mb-2 flex-wrap gap-1">
+              <h3>{{ d.chapter_name || '未分类' }}</h3>
+              <div class="flex gap-1 items-center">
+                <span class="tag" :class="getSubjectTagClass(d.subject)">{{ d.subject }}</span>
+                <span v-if="d.mastery_score" class="score-badge" :style="getScoreStyle(d.mastery_score)">
+                  🏆 {{ d.mastery_score }}%
+                </span>
+                <span v-if="d.is_published" class="tag tag-green">已发布</span>
+                <button class="btn btn-ghost btn-sm" @click="openDiaryModal(d)" style="margin-left:.5rem">✏️</button>
+                <button class="btn btn-ghost btn-sm" style="color:var(--red)" @click="deleteDiary(d.id)">🗑</button>
+              </div>
+            </div>
+            <p v-if="d.oral_transcript" class="mt-1"><strong style="color:var(--text);">口述记录：</strong>{{ d.oral_transcript }}</p>
+            <p v-if="d.ai_summary" class="mt-1"><strong style="color:var(--blue-bright);">AI总结：</strong>{{ d.ai_summary }}</p>
+            <p v-if="d.missing_points" class="mt-1"><strong style="color:var(--red);">薄弱环节：</strong>{{ d.missing_points }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ MEMOS ============ -->
+    <div v-if="currentView === 'memos'">
+      <div class="card mb-3">
+        <div class="card-header">
+          <h2>📋 备忘录管理</h2>
+          <div class="flex gap-2">
+            <button class="btn btn-primary" @click="openMemoModal()">+ 新建备忘录</button>
+          </div>
+        </div>
+        <div class="flex gap-2 flex-wrap items-center">
+          <select class="input" style="max-width:140px;" v-model="memoFilter.status">
+            <option value="all">全部状态</option>
+            <option value="pending">待完成</option>
+            <option value="done">已完成</option>
+          </select>
+          <select class="input" style="max-width:140px;" v-model="memoFilter.priority">
+            <option value="">全部优先级</option>
+            <option value="high">高</option>
+            <option value="medium">中</option>
+            <option value="low">低</option>
+          </select>
+          <input class="input" style="max-width:200px;" v-model="memoFilter.search" placeholder="🔍 搜索备忘录...">
+          <span class="text-sm text-muted">共 {{ filteredMemos.length }} 条</span>
+        </div>
+      </div>
+
+      <div v-if="loading.allMemos" class="loading"><div class="spinner"></div></div>
+      <div v-else-if="filteredMemos.length === 0" class="card empty-state">
+        <div class="icon">📝</div>
+        <p>没有备忘录</p>
+      </div>
+      <div v-else class="card">
+        <div v-for="m in filteredMemos" :key="m.id" class="memo-item">
+          <div class="memo-check" :class="{ done: m.is_done }" @click="toggleMemo(m)"></div>
+          <div class="memo-content">
+            <div class="memo-text" :class="{ done: m.is_done }">{{ m.content }}</div>
+            <div class="flex gap-2 mt-1 items-center">
+              <span v-if="m.priority" class="memo-priority" :class="'priority-' + m.priority">⚑ {{ priorityLabel(m.priority) }}</span>
+              <span class="text-xs text-muted">{{ formatDate(m.memo_date) }}</span>
+            </div>
+          </div>
+          <div class="flex gap-1">
+            <button class="btn btn-ghost btn-sm" @click="deleteMemo(m.id)">🗑</button>
+          </div>
+        </div>
       </div>
     </div>
   </main>
 
-  <footer>
-    <div class="footer-links">
-      <a href="/what-is-cpa.html">注会是什么</a>
-      <a href="/exam-overview.html">考试概览</a>
-      <a href="/cpa-requirements.html">报考条件</a>
-      <a href="/study-resources.html">学习资源</a>
-      <a href="/ai-cpa-learning.html">AI学习</a>
-      <a href="/blog/">学习笔记</a>
-      <a href="/about.html">关于</a>
-      <a href="/contact.html">联系</a>
-      <a href="/sitemap.xml">Sitemap</a>
+  <!-- AI Chat FAB -->
+  <button class="chat-fab" @click="chatOpen = !chatOpen" :title="chatOpen ? '关闭AI助手' : '打开AI助手'">
+    {{ chatOpen ? '✕' : '🤖' }}
+  </button>
+  <div v-if="chatOpen" class="chat-panel">
+    <div class="chat-header">
+      <h3>🤖 悟空AI助手</h3>
+      <button class="btn btn-ghost btn-sm" @click="chatOpen = false">✕</button>
     </div>
-    <p>📊 SAIClaws 注会 &copy; 2025 · 零基础小白CPA备考站 · 非官方独立学习资源</p>
-  </footer>
+    <div class="chat-body">
+      <div class="chat-message bot">
+        👋 你好！我是悟空AI助手，专为CPA备考设计。<br>
+        我可以帮你解答会计、税法、经济法的问题，分析你的学习薄弱点，提供针对性建议。
+      </div>
+      <div class="chat-placeholder" v-if="chatMessages.length <= 1">
+        <div>
+          <p style="font-size:2rem;margin-bottom:.5rem;">🐵</p>
+          <p><strong style="color:var(--gold);">悟空AI助手已激活</strong></p>
+          <p class="text-sm mt-1">我是你的CPA学习伙伴，随便问我会计、税法、经济法的问题！</p>
+        </div>
+      </div>
+      <div v-for="(msg, i) in chatMessages.slice(1)" :key="i"
+        :class="'chat-message ' + (msg.role === 'user' ? 'user' : 'bot')"
+        v-html="msg.content.replace(/\n/g,'<br>')">
+      </div>
+      <div v-if="chatLoading" class="chat-message bot" style="color:var(--muted)">
+        🐵 思考中...
+      </div>
+    </div>
+    <div class="chat-input-area">
+      <input class="input" v-model="chatInput" placeholder="问我任何CPA问题..." @keyup.enter="sendChat" :disabled="chatLoading">
+      <button class="btn btn-gold btn-sm" @click="sendChat" :disabled="chatLoading || !chatInput.trim()">发送</button>
+    </div>
+  </div>
+
+  <!-- Add/Edit Memo Modal -->
+  <div v-if="memoModal.show" class="modal-overlay" @click.self="memoModal.show = false">
+    <div class="modal">
+      <h2>{{ memoModal.editingId ? '编辑备忘录' : '新建备忘录' }}</h2>
+      <div class="form-group">
+        <label>内容 *</label>
+        <textarea class="input" v-model="memoModal.form.content" rows="3" placeholder="输入备忘录内容..."></textarea>
+      </div>
+      <div class="form-group">
+        <label>日期</label>
+        <input class="input" type="date" v-model="memoModal.form.memo_date">
+      </div>
+      <div class="form-group">
+        <label>优先级</label>
+        <select class="input" v-model="memoModal.form.priority">
+          <option value="">无</option>
+          <option value="high">高</option>
+          <option value="medium">中</option>
+          <option value="low">低</option>
+        </select>
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-outline" @click="memoModal.show = false">取消</button>
+        <button class="btn btn-primary" @click="saveMemo" :disabled="memoModal.saving">
+          {{ memoModal.saving ? '保存中...' : '保存' }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Diary Modal -->
+  <div v-if="diaryModal.show" class="modal-overlay" @click.self="diaryModal.show = false">
+    <div class="modal">
+      <h2>✍️ 写学习日记</h2>
+      <div class="form-group">
+        <label>日期</label>
+        <input class="input" type="date" v-model="diaryModal.form.entry_date">
+      </div>
+      <div class="form-group">
+        <label>科目 *</label>
+        <select class="input" v-model="diaryModal.form.subject">
+          <option value="">请选择</option>
+          <option value="会计">会计</option>
+          <option value="税法">税法</option>
+          <option value="经济法">经济法</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>章节</label>
+        <input class="input" v-model="diaryModal.form.chapter_name" placeholder="如：第5章 长期股权投资">
+      </div>
+      <div class="form-group">
+        <label>口述记录</label>
+        <textarea class="input" v-model="diaryModal.form.oral_transcript" rows="4" placeholder="记录你今天学到的内容..."></textarea>
+      </div>
+      <div class="form-group">
+        <label>AI总结</label>
+        <textarea class="input" v-model="diaryModal.form.ai_summary" rows="2" placeholder="AI生成的学习总结（可手动填写）"></textarea>
+      </div>
+      <div class="form-group">
+        <label>薄弱环节</label>
+        <input class="input" v-model="diaryModal.form.missing_points" placeholder="需要加强的知识点">
+      </div>
+      <div class="form-group">
+        <label>掌握度评分 (0-100)</label>
+        <input class="input" type="number" min="0" max="100" v-model.number="diaryModal.form.mastery_score" placeholder="如：75">
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-outline" @click="diaryModal.show = false">取消</button>
+        <button class="btn btn-primary" @click="saveDiary" :disabled="diaryModal.saving">
+          {{ diaryModal.saving ? '保存中...' : '保存日记' }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Knowledge Base Modal -->
+  <div v-if="kbModal.show" class="modal-overlay" @click.self="kbModal.show = false">
+    <div class="modal">
+      <h2>{{ kbModal.editingId ? '编辑知识点' : '新增知识点' }}</h2>
+      <div class="form-group">
+        <label>科目 *</label>
+        <select class="input" v-model="kbModal.form.subject">
+          <option value="">请选择</option>
+          <option value="会计">会计</option>
+          <option value="税法">税法</option>
+          <option value="经济法">经济法</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>章节号 *</label>
+        <input class="input" type="number" v-model.number="kbModal.form.chapter_no" placeholder="如：3">
+      </div>
+      <div class="form-group">
+        <label>章节名称 *</label>
+        <input class="input" v-model="kbModal.form.chapter_name" placeholder="如：固定资产">
+      </div>
+      <div class="form-group">
+        <label>知识点名称 *</label>
+        <input class="input" v-model="kbModal.form.topic_name" placeholder="如：固定资产折旧方法">
+      </div>
+      <div class="form-group">
+        <label>内容</label>
+        <textarea class="input" v-model="kbModal.form.content" rows="3"></textarea>
+      </div>
+      <div class="form-group">
+        <label>大纲等级</label>
+        <select class="input" v-model.number="kbModal.form.syllabus_level">
+          <option :value="1">1-了解</option>
+          <option :value="2">2-理解</option>
+          <option :value="3">3-掌握</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>关键考点（逗号分隔）</label>
+        <input class="input" v-model="kbModal.form.key_points" placeholder="折旧方法,折旧年限,加速折旧">
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-outline" @click="kbModal.show = false">取消</button>
+        <button class="btn btn-primary" @click="saveKnowledge" :disabled="kbModal.saving">
+          {{ kbModal.saving ? '保存中...' : (kbModal.editingId ? '更新' : '新增') }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const { createApp, ref, reactive, computed, onMounted } = Vue;
+
+const SUPABASE_URL = 'https://lwoqjahqneosnummjlbo.supabase.co';
+const SUPABASE_KEY = '***';
+
+const app = createApp({
+  setup() {
+    // -- Supabase client --
+    const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    // -- State --
+    const currentView = ref('dashboard');
+    const chatOpen = ref(false);
+    const chatInput = ref('');
+    const chatMessages = ref([{ role: 'bot', content: '👋 你好！我是悟空AI助手 🐵<br>专门辅助CPA备考。会计、税法、经济法的问题随便问！' }]);
+    const chatLoading = ref(false);
+    const edgeFunctionUrl = 'https://lwoqjahqneosnummjlbo.supabase.co/functions/v1/ai_chat';
+    const supabaseUrl = SUPABASE_URL;
+
+    // Toast
+    const toast = reactive({ show: false, type: 'success', message: '', timer: null });
+    const showToast = (msg, type = 'success') => {
+      toast.message = msg; toast.type = type; toast.show = true;
+      if (toast.timer) clearTimeout(toast.timer);
+      toast.timer = setTimeout(() => { toast.show = false; }, 3000);
+    };
+
+    // Loading states
+    const loading = reactive({
+      reviews: false, memos: false, recentDiary: false,
+      knowledge: false, diary: false, allMemos: false
+    });
+
+    // Data
+    const stats = reactive({
+      totalKnowledge: 0, totalDiary: 0, todayMemos: 0, todayReviews: 0, avgMastery: 0
+    });
+    const todayReviews = ref([]);
+    const todayMemos = ref([]);
+    const recentDiary = ref([]);
+    const allKnowledge = ref([]);
+    const allDiary = ref([]);
+    const allMemos = ref([]);
+
+    // -- Filters --
+    const kbFilter = reactive({ subject: '', chapter: '', level: '', search: '' });
+    const diaryFilter = reactive({ subject: '', search: '' });
+    const memoFilter = reactive({ status: 'all', priority: '', search: '' });
+
+    // -- Computed --
+    const todayString = computed(() => {
+      const d = new Date();
+      return `${d.getFullYear()}年${d.getMonth() + 1}月${d.getDate()}日`;
+    });
+    const weekdayString = computed(() => {
+      const days = ['日', '一', '二', '三', '四', '五', '六'];
+      return `星期${days[new Date().getDay()]}`;
+    });
+    const todayDateStr = computed(() => {
+      const d = new Date();
+      return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+    });
+
+    const kbChapters = computed(() => {
+      const chapters = new Set();
+      allKnowledge.value.forEach(k => { if (k.chapter_name) chapters.add(k.chapter_name); });
+      return Array.from(chapters).sort();
+    });
+
+    const filteredKnowledge = computed(() => {
+      let data = allKnowledge.value;
+      if (kbFilter.subject) data = data.filter(k => k.subject === kbFilter.subject);
+      if (kbFilter.chapter) data = data.filter(k => k.chapter_name === kbFilter.chapter);
+      if (kbFilter.level) data = data.filter(k => k.syllabus_level === kbFilter.level);
+      if (kbFilter.search) {
+        const q = kbFilter.search.toLowerCase();
+        data = data.filter(k =>
+          (k.topic_name && k.topic_name.toLowerCase().includes(q)) ||
+          (k.content && k.content.toLowerCase().includes(q)) ||
+          (k.chapter_name && k.chapter_name.toLowerCase().includes(q)) ||
+          (k.key_points && k.key_points.toLowerCase().includes(q))
+        );
+      }
+      return data;
+    });
+
+    const filteredDiary = computed(() => {
+      let data = allDiary.value;
+      if (diaryFilter.subject) data = data.filter(d => d.subject === diaryFilter.subject);
+      if (diaryFilter.search) {
+        const q = diaryFilter.search.toLowerCase();
+        data = data.filter(d =>
+          (d.oral_transcript && d.oral_transcript.toLowerCase().includes(q)) ||
+          (d.ai_summary && d.ai_summary.toLowerCase().includes(q)) ||
+          (d.chapter_name && d.chapter_name.toLowerCase().includes(q)) ||
+          (d.missing_points && d.missing_points.toLowerCase().includes(q))
+        );
+      }
+      return data;
+    });
+
+    const filteredMemos = computed(() => {
+      let data = allMemos.value;
+      if (memoFilter.status === 'pending') data = data.filter(m => !m.is_done);
+      if (memoFilter.status === 'done') data = data.filter(m => m.is_done);
+      if (memoFilter.priority) data = data.filter(m => m.priority === memoFilter.priority);
+      if (memoFilter.search) {
+        const q = memoFilter.search.toLowerCase();
+        data = data.filter(m => m.content && m.content.toLowerCase().includes(q));
+      }
+      return data;
+    });
+
+    // -- Helpers --
+    const formatDate = (d) => {
+      if (!d) return '—';
+      const dt = new Date(d);
+      if (isNaN(dt.getTime())) return d;
+      return `${dt.getFullYear()}-${String(dt.getMonth()+1).padStart(2,'0')}-${String(dt.getDate()).padStart(2,'0')}`;
+    };
+    const truncateText = (text, len = 100) => {
+      if (!text) return '';
+      return text.length > len ? text.slice(0, len) + '...' : text;
+    };
+    const getSubjectTagClass = (subj) => {
+      if (subj === '会计') return 'tag-blue';
+      if (subj === '税法') return 'tag-gold';
+      if (subj === '经济法') return 'tag-teal';
+      return 'tag-blue';
+    };
+    const getLevelTagClass = (level) => {
+      if (level === '掌握') return 'tag-gold';
+      if (level === '理解') return 'tag-blue';
+      return 'tag-teal';
+    };
+    const getScoreStyle = (score) => {
+      if (score >= 80) return `background:rgba(16,185,129,0.15);color:#10b981;`;
+      if (score >= 60) return `background:rgba(245,158,11,0.15);color:#f59e0b;`;
+      return `background:rgba(239,68,68,0.12);color:#ef4444;`;
+    };
+    const priorityLabel = (p) => {
+      if (p === 'high') return '高优先级';
+      if (p === 'medium') return '中优先级';
+      if (p === 'low') return '低优先级';
+      return '';
+    };
+    const resetKbFilter = () => {
+      kbFilter.subject = ''; kbFilter.chapter = ''; kbFilter.level = ''; kbFilter.search = '';
+    };
+
+    // -- Data fetching --
+    const fetchStats = async () => {
+      // Total knowledge
+      const { count: kCount } = await sb.from('knowledge_base').select('*', { count: 'exact', head: true });
+      stats.totalKnowledge = kCount || 0;
+
+      // Total diary
+      const { count: dCount } = await sb.from('study_diary').select('*', { count: 'exact', head: true });
+      stats.totalDiary = dCount || 0;
+
+      // Today memos
+      const { count: mCount } = await sb.from('daily_memos').select('*', { count: 'exact', head: true }).eq('memo_date', todayDateStr.value);
+      stats.todayMemos = mCount || 0;
+
+      // Today reviews
+      const { count: rCount } = await sb.from('mastery_tracking').select('*', { count: 'exact', head: true }).lte('next_review_date', todayDateStr.value);
+      stats.todayReviews = rCount || 0;
+
+      // Avg mastery
+      const { data: mData } = await sb.from('mastery_tracking').select('score');
+      if (mData && mData.length > 0) {
+        const avg = mData.reduce((sum, r) => sum + (r.score || 0), 0) / mData.length;
+        stats.avgMastery = Math.round(avg);
+      }
+    };
+
+    const fetchTodayReviews = async () => {
+      loading.reviews = true;
+      const { data, error } = await sb.from('mastery_tracking')
+        .select('*').lte('next_review_date', todayDateStr.value).order('next_review_date');
+      if (!error) todayReviews.value = data || [];
+      loading.reviews = false;
+    };
+
+    const fetchTodayMemos = async () => {
+      loading.memos = true;
+      const { data, error } = await sb.from('daily_memos')
+        .select('*').eq('memo_date', todayDateStr.value).order('id');
+      if (!error) todayMemos.value = data || [];
+      loading.memos = false;
+    };
+
+    const fetchRecentDiary = async () => {
+      loading.recentDiary = true;
+      const { data, error } = await sb.from('study_diary')
+        .select('*').order('entry_date', { ascending: false }).limit(5);
+      if (!error) recentDiary.value = data || [];
+      loading.recentDiary = false;
+    };
+
+    const fetchKnowledge = async () => {
+      loading.knowledge = true;
+      const { data, error } = await sb.from('knowledge_base').select('*').order('chapter_no').order('id');
+      if (!error) allKnowledge.value = data || [];
+      loading.knowledge = false;
+    };
+
+    const fetchDiary = async () => {
+      loading.diary = true;
+      const { data, error } = await sb.from('study_diary').select('*').order('entry_date', { ascending: false });
+      if (!error) allDiary.value = data || [];
+      loading.diary = false;
+    };
+
+    const fetchAllMemos = async () => {
+      loading.allMemos = true;
+      const { data, error } = await sb.from('daily_memos').select('*').order('memo_date', { ascending: false }).order('id');
+      if (!error) allMemos.value = data || [];
+      loading.allMemos = false;
+    };
+
+    const refreshDashboard = async () => {
+      await Promise.all([fetchStats(), fetchTodayReviews(), fetchTodayMemos(), fetchRecentDiary()]);
+      showToast('工作台已刷新', 'success');
+    };
+
+    // -- Memo CRUD --
+    const memoModal = reactive({
+      show: false, editingId: null, saving: false,
+      form: { content: '', memo_date: todayDateStr.value, priority: '' }
+    });
+    const openMemoModal = (memo = null) => {
+      if (memo) {
+        memoModal.editingId = memo.id;
+        memoModal.form = { content: memo.content, memo_date: memo.memo_date, priority: memo.priority || '' };
+      } else {
+        memoModal.editingId = null;
+        memoModal.form = { content: '', memo_date: todayDateStr.value, priority: '' };
+      }
+      memoModal.show = true;
+    };
+    const saveMemo = async () => {
+      if (!memoModal.form.content.trim()) { showToast('请输入备忘录内容', 'error'); return; }
+      memoModal.saving = true;
+      const payload = {
+        content: memoModal.form.content.trim(),
+        memo_date: memoModal.form.memo_date,
+        priority: memoModal.form.priority || null,
+        is_done: false
+      };
+      const { error } = await sb.from('daily_memos').insert(payload);
+      memoModal.saving = false;
+      if (error) { showToast('保存失败：' + error.message, 'error'); return; }
+      memoModal.show = false;
+      showToast('备忘录已添加', 'success');
+      await Promise.all([fetchTodayMemos(), fetchAllMemos(), fetchStats()]);
+    };
+    const toggleMemo = async (memo) => {
+      const { error } = await sb.from('daily_memos').update({ is_done: !memo.is_done }).eq('id', memo.id);
+      if (error) { showToast('操作失败', 'error'); return; }
+      memo.is_done = !memo.is_done;
+      await fetchStats();
+    };
+    const deleteMemo = async (id) => {
+      if (!confirm('确定删除这条备忘录吗？')) return;
+      const { error } = await sb.from('daily_memos').delete().eq('id', id);
+      if (error) { showToast('删除失败', 'error'); return; }
+      showToast('已删除', 'success');
+      await Promise.all([fetchTodayMemos(), fetchAllMemos(), fetchStats()]);
+    };
+
+    // -- Diary CRUD --
+    const diaryModal = reactive({
+      show: false, saving: false,
+      form: { entry_date: todayDateStr.value, subject: '', chapter_name: '', oral_transcript: '', ai_summary: '', missing_points: '', mastery_score: null }
+    });
+    const openDiaryModal = (diary = null) => {
+      if (diary) {
+        diaryModal.editingId = diary.id;
+        diaryModal.form = { entry_date: diary.entry_date, subject: diary.subject, chapter_name: diary.chapter_name || '', oral_transcript: diary.oral_transcript || '', ai_summary: diary.ai_summary || '', missing_points: diary.missing_points || '', mastery_score: diary.mastery_score || null };
+      } else {
+        diaryModal.editingId = null;
+        diaryModal.form = { entry_date: todayDateStr.value, subject: '', chapter_name: '', oral_transcript: '', ai_summary: '', missing_points: '', mastery_score: null };
+      }
+      diaryModal.show = true;
+    };
+    const saveDiary = async () => {
+      if (!diaryModal.form.subject) { showToast('请选择科目', 'error'); return; }
+      diaryModal.saving = true;
+      const payload = {
+        entry_date: diaryModal.form.entry_date,
+        subject: diaryModal.form.subject,
+        chapter_name: diaryModal.form.chapter_name || null,
+        oral_transcript: diaryModal.form.oral_transcript || null,
+        ai_summary: diaryModal.form.ai_summary || null,
+        missing_points: diaryModal.form.missing_points || null,
+        mastery_score: diaryModal.form.mastery_score || null
+      };
+      let error;
+      if (diaryModal.editingId) {
+        ({ error } = await sb.from('study_diary').update(payload).eq('id', diaryModal.editingId));
+      } else {
+        ({ error } = await sb.from('study_diary').insert(payload));
+      }
+      diaryModal.saving = false;
+      if (error) { showToast('保存失败：' + error.message, 'error'); return; }
+      diaryModal.show = false;
+      showToast(diaryModal.editingId ? '日记已更新 ✏️' : '学习日记已保存 📝', 'success');
+      await Promise.all([fetchDiary(), fetchRecentDiary(), fetchStats()]);
+    };
+    const deleteDiary = async (id) => {
+      if (!confirm('确定删除这条日记吗？')) return;
+      const { error } = await sb.from('study_diary').delete().eq('id', id);
+      if (error) { showToast('删除失败', 'error'); return; }
+      showToast('已删除', 'success');
+      await Promise.all([fetchDiary(), fetchRecentDiary(), fetchStats()]);
+    };
+
+    // -- Knowledge Base CRUD --
+    const kbModal = reactive({
+      show: false, editingId: null, saving: false,
+      form: { subject: '', chapter_no: null, chapter_name: '', topic_name: '', content: '', syllabus_level: 2, key_points: '' }
+    });
+    const openKbModal = (kb = null) => {
+      if (kb) {
+        kbModal.editingId = kb.id;
+        kbModal.form = { subject: kb.subject, chapter_no: kb.chapter_no, chapter_name: kb.chapter_name, topic_name: kb.topic_name, content: kb.content || '', syllabus_level: kb.syllabus_level || 2, key_points: Array.isArray(kb.key_points) ? kb.key_points.join(',') : (kb.key_points || '') };
+      } else {
+        kbModal.editingId = null;
+        kbModal.form = { subject: '', chapter_no: null, chapter_name: '', topic_name: '', content: '', syllabus_level: 2, key_points: '' };
+      }
+      kbModal.show = true;
+    };
+    const saveKnowledge = async () => {
+      if (!kbModal.form.subject || !kbModal.form.topic_name || !kbModal.form.chapter_name) { showToast('请填写必填字段', 'error'); return; }
+      kbModal.saving = true;
+      const payload = {
+        subject: kbModal.form.subject, chapter_no: kbModal.form.chapter_no,
+        chapter_name: kbModal.form.chapter_name, topic_name: kbModal.form.topic_name,
+        content: kbModal.form.content || null, syllabus_level: kbModal.form.syllabus_level,
+        key_points: kbModal.form.key_points ? kbModal.form.key_points.split(',').map(s => s.trim()) : []
+      };
+      let error;
+      if (kbModal.editingId) {
+        ({ error } = await sb.from('knowledge_base').update(payload).eq('id', kbModal.editingId));
+      } else {
+        ({ error } = await sb.from('knowledge_base').insert(payload));
+      }
+      kbModal.saving = false;
+      if (error) { showToast('保存失败：' + error.message, 'error'); return; }
+      kbModal.show = false;
+      showToast(kbModal.editingId ? '知识点已更新' : '知识点已添加 📚', 'success');
+      await fetchKnowledge();
+    };
+    const deleteKnowledge = async (id) => {
+      if (!confirm('确定删除这个知识点吗？')) return;
+      const { error } = await sb.from('knowledge_base').delete().eq('id', id);
+      if (error) { showToast('删除失败', 'error'); return; }
+      showToast('已删除', 'success');
+      await fetchKnowledge();
+    };
+
+    // -- Chat --
+    const sendChat = async () => {
+      const msg = chatInput.value.trim();
+      if (!msg) return;
+      chatMessages.value.push({ role: 'user', content: msg });
+      chatInput.value = '';
+      chatLoading.value = true;
+      try {
+        const history = chatMessages.value.slice(1, -1).map(m => ({ role: m.role === 'bot' ? 'assistant' : 'user', content: m.content.replace(/<br>/g,'\n') }));
+        const res = await fetch(edgeFunctionUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: msg, history })
+        });
+        const data = await res.json();
+        chatMessages.value.push({ role: 'bot', content: data.reply || data.error || '🐵 悟空暂时无法回复，请稍后再试' });
+      } catch (e) {
+        chatMessages.value.push({ role: 'bot', content: '🐵 连接失败，请检查Edge Function是否已部署' });
+      }
+      chatLoading.value = false;
+    };
+
+    // -- View switching --
+    const viewDataLoaders = {
+      dashboard: refreshDashboard,
+      knowledge: fetchKnowledge,
+      diary: fetchDiary,
+      memos: fetchAllMemos
+    };
+    const loadedViews = reactive({ dashboard: false, knowledge: false, diary: false, memos: false });
+    const switchView = async (view) => {
+      currentView.value = view;
+      if (!loadedViews[view] && viewDataLoaders[view]) {
+        await viewDataLoaders[view]();
+        loadedViews[view] = true;
+      }
+    };
+
+    // -- Init --
+    onMounted(async () => {
+      await refreshDashboard();
+      loadedViews.dashboard = true;
+    });
+
+    // Return everything to template
+    return {
+      currentView, chatOpen, chatInput, supabaseUrl,
+      toast, showToast, loading,
+      stats, todayReviews, todayMemos, recentDiary,
+      allKnowledge, allDiary, allMemos,
+      kbFilter, diaryFilter, memoFilter,
+      todayString, weekdayString, todayDateStr,
+      kbChapters,
+      filteredKnowledge, filteredDiary, filteredMemos,
+      formatDate, truncateText, getSubjectTagClass, getLevelTagClass, getScoreStyle, priorityLabel, resetKbFilter,
+      memoModal, openMemoModal, saveMemo, toggleMemo, deleteMemo,
+      diaryModal, openDiaryModal, saveDiary, deleteDiary,
+      kbModal, openKbModal, saveKnowledge, deleteKnowledge,
+      sendChat,
+      switchView, refreshDashboard
+    };
+  }
+});
+
+app.mount('#app');
+</script>
 </body>
 </html>
