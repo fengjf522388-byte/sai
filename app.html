@@ -1105,7 +1105,7 @@ const app = createApp({
       fetchTrash(); fetchKnowledge(); fetchDiary(); fetchAllMemos(); fetchStats();
     };
 
-    const refreshDashboard    const refreshDashboard = async () => {
+    const refreshDashboard = async () => {
       await Promise.all([fetchStats(), fetchTodayReviews(), fetchTodayMemos(), fetchRecentDiary()]);
       showToast('工作台已刷新', 'success');
     };
