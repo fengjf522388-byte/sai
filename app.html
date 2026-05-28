@@ -1092,9 +1092,7 @@ select.input { cursor:pointer; }
         </div>
         <div class="search-results" v-if="searchQuery">
           <div v-if="searching" class="search-loading">🔍 搜索中...</div>
-          <div v-else-if="!searchResults.length" class="search-empty">
-            未找到 "<span v-text="searchQuery"></span>"
-          </div>
+          <div v-else-if="!searchResults.length" class="search-empty">未找到相关结果，试试其他关键词</div>
           <template v-else>
             <div v-for="(group, gIdx) in searchResults" :key="gIdx">
               <div class="search-group">{{ group.type }}</div>
