@@ -1,12 +1,17 @@
 -- ============================================
 -- SAIClaws 3.0 升级 - 数据库迁移脚本
 -- 在 Supabase Dashboard → SQL Editor 中运行
+-- 如果报 policy 已存在，跳过图片相关部分即可
 -- ============================================
+
+-- 如果之前图片策略已创建，跳过这段
+-- 取消下面注释来创建图片策略：
+-- INSERT INTO storage.buckets ... (skip if exists)
 
 -- 1. 闪卡表 (Flashcards)
 CREATE TABLE IF NOT EXISTS flashcards (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  knowledge_id UUID REFERENCES knowledge_base(id) ON DELETE SET NULL,
+  knowledge_id BIGINT REFERENCES knowledge_base(id) ON DELETE SET NULL,
   subject TEXT,
   question TEXT NOT NULL,
   answer TEXT NOT NULL,
